@@ -1,0 +1,1169 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Na Chen">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="哈工大操作系统课程实验前言我一直认为：LeetCode、八股文和系统设计只是短期提升面试水平的捷径；而想要走的更远，需要持续地学习名校的经典课程和实验，对于非科班的同学更是如此。操作系统涵盖方方面面，许多应用层的设计思想（如多进&#x2F;线&#x2F;协程、并发、异步、缓冲）都能在操作系统中找到参照。 哈工大李老师的操作系统课程对于进程、内存的教学清晰流畅，并且十分注重代码和实验，并非需要背的文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="哈工大操作系统课程实验">
+<meta property="og:url" content="https://nachen95.github.io/2023/07/09/HITOS/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="哈工大操作系统课程实验前言我一直认为：LeetCode、八股文和系统设计只是短期提升面试水平的捷径；而想要走的更远，需要持续地学习名校的经典课程和实验，对于非科班的同学更是如此。操作系统涵盖方方面面，许多应用层的设计思想（如多进&#x2F;线&#x2F;协程、并发、异步、缓冲）都能在操作系统中找到参照。 哈工大李老师的操作系统课程对于进程、内存的教学清晰流畅，并且十分注重代码和实验，并非需要背的文">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-09T08:48:05.826Z">
+<meta property="article:modified_time" content="2023-07-09T08:48:15.187Z">
+<meta property="article:author" content="Na Chen">
+<meta property="article:tag" content="计算机课程">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>哈工大操作系统课程实验 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nachen95.github.io","root":"/","version":"1.9.5","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>主页</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">哈工大操作系统课程实验</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-09 08:48" pubdate>
+          2023年7月9日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          50k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          419 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">哈工大操作系统课程实验</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="哈工大操作系统课程实验"><a href="#哈工大操作系统课程实验" class="headerlink" title="哈工大操作系统课程实验"></a><a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11">哈工大操作系统课程实验</a></h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我一直认为：LeetCode、八股文和系统设计只是短期提升面试水平的捷径；而想要走的更远，需要持续地学习名校的经典课程和<strong>实验</strong>，对于非科班的同学更是如此。操作系统涵盖方方面面，许多应用层的设计思想（如多进&#x2F;线&#x2F;协程、并发、异步、缓冲）都能在操作系统中找到参照。</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV19r4y1b7Aw?p=1">哈工大李老师的操作系统课程</a>对于进程、内存的教学清晰流畅，并且十分注重代码和实验，并非需要背的文科式的概念堆砌，据说是国内最好的操作系统课程之一（国内另一门<a target="_blank" rel="noopener" href="https://space.bilibili.com/202224425/channel/collectiondetail?sid=192498">南京大学蒋老师</a>的课程也十分不错）。它采用的是实际工业界的 Linux 0.11，约两万行，而 Linux 2.6 代码量在千万行级别，相较之下容易掌握。但 Linux 0.11 和 Bochs 硬件模拟器可能也稍显陈旧，并不是为了教学而设计的，实验过程中也有一些避不开的晦涩难懂的代码，但它们对理解操作系统并没有太大帮助。MIT 的 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2021/schedule.html">6.S081</a> 则专门设计了一个教学使用的操作系统 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2021/xv6/book-riscv-rev2.pdf">xv6</a>，英语较好的同学可以选择学习它。</p>
+<p>对于已经工作的同学，个人建议在学操作系统时要考虑投入产出比。对于核心代码（比如系统调用，进程创建与切换）值得投入大量甚至无限的时间精力，但对于其他部分，不一定要弄懂每一行，只要知道这个函数是在做什么就足够了（有时候还可以猜测它在做什么），战线不宜过长。对于实验也是类似，不必追求从零独立完成。首先只看完视频是根本没法做实验的，至少还需要认真阅读《Linux 内核完全注释》、《Linux 内核设计的艺术》和 Linux 0.11 源码的相应部分。阅读完后可能会有大概的思路，但是到写具体代码时还是难以下手。这时可以看实验参考，底线是理解实验参考的每行代码。</p>
+<h2 id="学习材料"><a href="#学习材料" class="headerlink" title="学习材料"></a>学习材料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV19r4y1b7Aw/?p=1&vd_source=683a01bdc1972c35f5b27445f6fa8ccd">哈工大操作系统视频</a></li>
+<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/1231236//">《Linux 内核完全注释》</a>，官方教材一，查漏补缺</li>
+<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/30391722/">《操作系统原理、实现与实践》</a>，官方教材二，李老师写的配套课程的教材</li>
+<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/24708145/">《Linux 内核设计的艺术》</a>，也是权威严谨的书籍，图解丰富，从学生角度出发，读起来连贯不跳跃</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dibingfa/flash-linux0.11-talk">《品读 Linux 0.11 核心代码》</a>，浅显易懂，小白都能看懂</li>
+<li>实验楼的<a target="_blank" rel="noopener" href="https://www.lanqiao.cn/courses/115">《操作系统原理与实践》</a>，官方实验平台</li>
+<li>GitHub <a target="_blank" rel="noopener" href="https://github.com/Wangzhike/HIT-Linux-0.11">Wangzhike&#x2F;HIT-Linux-0.11</a>，实验记录与讲解</li>
+</ul>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h3><p>我曾尝试用 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL</a>，解决了不少环境问题，但最终还是发现 Windows 和 Linux 0.11 的文件系统难以兼容，从而无法与 Linux 0.11 交换文件（现在可能有解决方案，比如 WSL2，但估计也较麻烦）。所以最终转向了<a target="_blank" rel="noopener" href="https://www.aliyun.com/activity/ambassador/share-gift/goods?taskCode=xfyh2107&recordId=757672&userCode=i5mn5r7m">阿里云</a>，选择了其中最便宜的轻量应用服务器，原生 Ubuntu 操作系统，新用户一年仅几十元。</p>
+<p>除了做本实验外，拥有一台个人云服务器好处多多，比如用于开发<a href="https://nachen95.github.io/">个人博客网站</a>，不受地点限制可以随时从某一台个人 PC 机通过 SSH 连接上去。我正是用 VSCode 通过 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/remote/ssh">SSH</a> 连接（可以通过 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/remote/troubleshooting#_improving-your-security-with-a-dedicated-key">SSH keys</a> 免密登录）到云服务器查看、编辑其中的 Linux 0.11 的代码。</p>
+<p>在 Ubuntu 上如何编译，运行 Linux 0.11 请参考<a target="_blank" rel="noopener" href="https://github.com/Wangzhike/HIT-Linux-0.11/blob/master/0-prepEnv/%E5%87%86%E5%A4%87%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83.md">《Linux-0.11实验环境准备》</a>。</p>
+<h3 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h3><p>上述的云服务器就可以启动硬件模拟器 Bochs 来运行 Linux 0.11。但问题是响应慢，启动了 Linux 0.11 后，在上面敲行命令都要好多秒才能显示出来。猜测原因有可能是图形界面要用比较大的带宽。同时我发现<a target="_blank" rel="noopener" href="https://www.lanqiao.cn/courses/115">实验楼</a>里提供的环境自带桌面系统，可通过浏览器打开。其上的 Linux 0.11 的运行、调试速度快，而且也能 <a target="_blank" rel="noopener" href="https://www.lanqiao.cn/library/shiyanlou-docs/feature/ssh">SSH 直连</a> (缺点是需要开通会员，三个月需几十元）。</p>
+<p>因此，整个工作流为：</p>
+<ul>
+<li>个人 PC 机通过 VSCode SSH 到云服务器上，在 VSCode 上编辑代码，在云服务器上做 Linux 0.11 的编译检查。</li>
+<li>通过 SCP + <code>sshpass</code>  将云服务器的 Linux 0.11 代码打包并拷贝到实验楼的服务器上。</li>
+<li>在实验楼的服务器解压代码，并编译出 Linux 0.11 内核映像。</li>
+<li>浏览器打开实验楼服务器对应的桌面 UI，在上面运行、调试 Linux 0.11。</li>
+</ul>
+<h2 id="代码注释"><a href="#代码注释" class="headerlink" title="代码注释"></a>代码注释</h2><p>代码注释在 <a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/tree/Annotation">Annotation 分支</a>。</p>
+<h2 id="实验一-操作系统引导"><a href="#实验一-操作系统引导" class="headerlink" title="实验一 操作系统引导"></a>实验一 操作系统引导</h2><h3 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h3><p>此次实验的基本内容是：</p>
+<ol>
+<li>阅读《Linux 内核完全注释》的第 6 章，对计算机和 Linux 0.11 的引导过程进行初步的了解；</li>
+<li>按照下面的要求改写 0.11 的引导程序 <code>bootsect.s</code></li>
+<li>有兴趣同学可以做做进入保护模式前的设置程序 <code>setup.s</code>。</li>
+</ol>
+<p>改写 <code>bootsect.s</code> 主要完成如下功能：</p>
+<ol>
+<li><code>bootsect.s</code> 能在屏幕上打印一段提示信息“XXX is booting…”，其中 XXX 是你给自己的操作系统起的名字，例如 LZJos、Sunix 等（可以上论坛上秀秀谁的 OS 名字最帅，也可以显示一个特色 logo，以表示自己操作系统的与众不同。）</li>
+</ol>
+<p>改写 <code>setup.s</code> 主要完成如下功能：</p>
+<ol>
+<li><code>bootsect.s</code> 能完成 <code>setup.s</code> 的载入，并跳转到 <code>setup.s</code> 开始地址执行。而 <code>setup.s</code> 向屏幕输出一行”Now we are in SETUP”。</li>
+<li><code>setup.s</code> 能获取至少一个基本的硬件参数（如内存参数、显卡参数、硬盘参数等），将其存放在内存的特定地址，并输出到屏幕上。</li>
+<li>setup.s 不再加载 Linux 内核，保持上述信息显示在屏幕上即可。</li>
+</ol>
+<h3 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h3><p>刚开机上电时，内存 RAM 里空空如也。在磁盘中虽然有操作系统程序，但 CPU 只能从内存里取指令执行，因此操作系统需要先将自己从磁盘搬运到内存中（即自举），并做好相关的初始化。搬运是由操作系统里的 <code>bootsect.s</code> 做的。</p>
+<p>刚开机上电时，80x86 CPU 从硬件层面将 CS 置为 0xf000，IP 置为 0xfff0，因此 CS:IP 指向的物理地址为（16位实模式）0xffff0，这是 BIOS 程序的起始地址。BIOS 程序是固化在 ROM 里，掉电不会丢失，即这部分地址是映射到 ROM 里的。它的作用是对硬件做检查，并设置中断向量和中断服务程序供后面使用，最后硬件触发由 BIOS 设置好的 int 0x19 中断，它将磁盘的第一个扇区（512B，即 <code>bootsect</code> 程序）加载到内存 0x07c00 处并跳转到这里执行。</p>
+<p>引导加载程序 <code>bootsect</code> 程序将操作系统的其余部分通过 BIOS 设置的中断服务全部读入内存中。包括 <code>setup.s</code> 程序和 <code>system</code> 模块。<code>system</code> 模块的头部是 <code>head.s</code> 程序，它也是为操作系统引导服务的。</p>
+<p><code>setup.s</code> 作用是利用 BIOS 设置的中断服务读取机器数据，比如光标位置，磁盘参数，根设备号，供后面的系统初始化使用。然后它将 <code>system</code> 模块移动到物理地址 0 处，并开启了 32 位保护模式（为此临时设置了 GDT 表）。最后通过 <code>jumpi 0, 8</code> （这是个 32 位地址，8 是段选择子）跳转到物理地址 0 处即 <code>head.s</code>。</p>
+<p><code>head.s</code> 重新设置了 GDT 表，并设置了页目录表和供内核使用的 4 个页表开启分页，共映射 16 MB 内存空间（当时软盘的物理内存大小为这个级别）。这 16 MB 空间的线性地址和物理地址是完全一致的，又由于内核代码段基址为 0，因此在内核代码中的逻辑地址即为物理地址，这给内核代码的编写带来方便（例如，内核函数 <a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/blob/05d5343b1569e797e4075f7c1340a42dddaee628/mm/memory.c#LL89C23-L89C23">free_page</a> 释放物理页，其入参 <code>addr</code> 既是逻辑地址，又是物理地址） 。注意页目录表和页表是放在物理地址 0 处，这相当于 <code>head.s</code> 废弃了自己。最后通过将 <code>main</code> 压栈和 <code>ret</code> 从汇编代码跳转到 C 语言的 <code>main</code> 执行。</p>
+<h3 id="实验参考"><a href="#实验参考" class="headerlink" title="实验参考"></a>实验参考</h3><p><a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/compare/master...Experiment1_OS_boot">参考这个提交</a>。在实验楼的实验指导中已给出参考答案。注意 <code>bootsect.s</code> 和 <code>setup.s</code> 文件末尾需要保留一个空行，否则在执行 as86 链接时会报错。</p>
+<h3 id="实验报告"><a href="#实验报告" class="headerlink" title="实验报告"></a>实验报告</h3><p>有时，继承传统意味着别手蹩脚。x86 计算机为了向下兼容，导致启动过程比较复杂。请找出 x86 计算机启动过程中，被硬件强制，软件必须遵守的两个“多此一举”的步骤（多找几个也无妨），说说它们为什么多此一举，并设计更简洁的替代方案。</p>
+<ol>
+<li><p>BIOS 将 <code>bootsect.s</code> 从磁盘读到 <code>0x07c00</code> 并跳转到这里执行。然后 <code>bootsect.s</code> 又将自己拷贝（为什么要拷贝）到 <code>0x90000</code> 处。这个拷贝是多此一举，一种替代方案是修改 BIOS，将 <code>bootsect.s</code> 直接读到 <code>0x90000</code>。</p>
+</li>
+<li><p>BIOS 在物理地址 0 处开始初始化中断向量表，而操作系统的页目录表最好放在物理地址 0 处，方便实现内核代码的逻辑地址和物理地址的恒等映射。因此<code>bootsect.s</code> 在读入操作系统 <code>system</code> 模块时，先将它放在<code>0x10000</code> 处，等 <code>setup.s</code> 使用完 BIOS 中断后，再将操作系统 <code>system</code> 模块拷贝到 物理地址 0 处。这个拷贝是多此一举的步骤，一种替代方案是修改 BIOS，让它将中断向量表放在其他不冲突的地方。</p>
+</li>
+</ol>
+<h2 id="实验二-系统调用"><a href="#实验二-系统调用" class="headerlink" title="实验二 系统调用"></a>实验二 系统调用</h2><h3 id="实验内容-1"><a href="#实验内容-1" class="headerlink" title="实验内容"></a>实验内容</h3><p>此次实验的基本内容是：在 Linux 0.11 上添加两个系统调用，并编写两个简单的应用程序测试它们。</p>
+<p>（1）<code>iam()</code></p>
+<p>第一个系统调用是 <code>iam()</code>，其原型为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">iam</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> * name)</span>;<br></code></pre></td></tr></table></figure>
+
+<p>完成的功能是将字符串参数 <code>name</code> 的内容拷贝到内核中保存下来。要求 <code>name</code> 的长度不能超过 23 个字符。返回值是拷贝的字符数。如果 <code>name</code> 的字符个数超过了 23，则返回 “-1”，并置 <code>errno</code> 为 <code>EINVAL</code>。</p>
+<p>在 <code>kernal/who.c</code> 中实现此系统调用。</p>
+<p>（2）<code>whoami()</code></p>
+<p>第二个系统调用是 <code>whoami()</code>，其原型为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">whoami</span><span class="hljs-params">(<span class="hljs-type">char</span>* name, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> size)</span>;<br></code></pre></td></tr></table></figure>
+
+<p>它将内核中由 <code>iam()</code> 保存的名字拷贝到 <code>name</code> 指向的用户地址空间中，同时确保不会对 <code>name</code> 越界访存（<code>name</code> 的大小由 <code>size</code> 说明）。返回值是拷贝的字符数。如果 <code>size</code> 小于需要的空间，则返回“-1”，并置 <code>errno</code> 为 <code>EINVAL</code>。</p>
+<p>也是在 <code>kernal/who.c</code> 中实现。</p>
+<p>（3）测试程序</p>
+<p>将 <code>iam.c</code> 和 <code>whoami.c</code>，<code>testlab2.c</code> 和 <code>testlab2.sh</code> 拷贝到 Linux 0.11 中，并在其环境下编译 <code>iam.c</code>, <code>whoami.c</code> 和 <code>testlab2.c</code>，最后执行 <code>testlab2.sh</code> 和编译后的 <code>testlab2</code> ，分数为两者之和。</p>
+<p>上述 4 个源文件在 <a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/tree/Experiment2_system_call/test">test&#x2F;</a> 目录下。测试流程为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">gcc -o iam iam.c<br>gcc -o <span class="hljs-built_in">whoami</span> whoami.c<br>gcc -o testlab2 testlab2.c<br>./testlab2 <span class="hljs-comment"># 满分 50 分</span><br>./testlab2.sh <span class="hljs-comment"># 满分 30 分</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="原理分析-1"><a href="#原理分析-1" class="headerlink" title="原理分析"></a>原理分析</h3><p>系统调用的本质是中断，因为调用内核段的函数不能像用户段那样简单直接的函数调用，否则会有安全问题（比如某个用户程序读取修改了 root 的密码），即使它们都处于你买的同一个内存条中。</p>
+<p>以 C 语言库函数 <code>printf</code> 为例，系统调用的路径依次为：</p>
+<ul>
+<li><code>printf</code></li>
+<li><code>int 0x80</code></li>
+<li><code>system_call</code></li>
+<li>查表 <code>sys_call_table</code></li>
+<li><code>sys_write</code></li>
+</ul>
+<p>下面依次介绍。</p>
+<p>（1）<code>printf</code> -&gt; <code>int 0x80</code></p>
+<p><code>printf</code> 是 C 运行库提供的 API。这是因为如果让用户程序直接调用 <code>int 0x80</code>，那么不同平台的可移植性不好（例如Windows 系统调用的中断向量号是 <code>0x2e</code> 而不是 <code>0x80</code>），同时也比较复杂，于是运行库充当了中间层。从而不同硬件平台都可以通过 <code>printf</code> API 进行打印，对用户程序屏蔽了硬件差异。</p>
+<p>C 语言的 API 可以通过宏展开或者手写嵌入汇编来调用 <code>int 0x80</code>。比如 <code>printf</code> 会调用宏 <code>_syscall3</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> _syscall3(type,name,atype,a,btype,b,ctype,c) \</span><br><span class="hljs-meta">type name(atype a,btype b,ctype c) \</span><br><span class="hljs-meta">&#123; \</span><br><span class="hljs-meta">long __res; \</span><br><span class="hljs-meta">__asm__ volatile (<span class="hljs-string">&quot;int $0x80&quot;</span> \</span><br><span class="hljs-meta">	: <span class="hljs-string">&quot;=a&quot;</span> (__res) \</span><br><span class="hljs-meta">	: <span class="hljs-string">&quot;0&quot;</span> (__NR_##name),<span class="hljs-string">&quot;b&quot;</span> ((long)(a)),<span class="hljs-string">&quot;c&quot;</span> ((long)(b)),<span class="hljs-string">&quot;d&quot;</span> ((long)(c))); \</span><br><span class="hljs-meta"><span class="hljs-keyword">if</span> (__res&gt;=0) \</span><br><span class="hljs-meta">	return (type) __res; \</span><br><span class="hljs-meta">errno=-__res; \</span><br><span class="hljs-meta">return -1; \</span><br><span class="hljs-meta">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>关于 C 语言中嵌入汇编的语法可以参考《Linux 内核完全注释》的 3.3.2 节。这里不对上面每行做具体解释，仅介绍其功能。但如果想要理解操作系统，上面每行代码的含义都应该完全掌握。</p>
+<p><code>_syscall3</code> 有 3 个入参，它们分别通过 EBX，ECX 和 EDX 寄存器传递进入 <code>int 0x80</code> 中。同时还会将 <code>__NR__##name</code> 通过 EAX 寄存器传入内核中。在 <code>printf</code> 中，<code>__NR__##name</code> 会拼接为 <code>__NR__write</code>。<code>__NR__write</code> 是系统调用号，代表着内核态函数 <code>sys_write</code> 在函数指针数组 <code>sys_call_table</code> 的下标号。处理完中断返回后，会通过 EAX 寄存器将结果返回到用户态变量 <code>__res</code> 中。从代码可以看出，<code>__res</code> 代表中断处理是否成功，如果它大于等于 <code>0</code> 代表成功；否则失败，此时会将它的相反数赋给全局变量 <code>errno</code> 中，最后返回 <code>-1</code>。</p>
+<p>（2）<code>int 0x80</code> -&gt; <code>system_call</code></p>
+<p>这里是系统调用的最关键之处，也是用户态和内核态发生改变的边界。在 CPU 执行 <code>int 0x80</code> 之前还是处于用户态，执行完跳转到 <code>system_call</code> 后就变成内核态了，在之后就是普通的函数调用了。</p>
+<p>那么这一步发生了什么呢？我们知道，CPU 的工作就是取指令执行，当它看到 <code>int 0x80</code> 指令，就会根据中断向量 0x80 ，在中断向量描述符表 IDT 中找到相应的门描述符，特权级检查通过后，就会跳转到相应的中断处理程序的入口地址。</p>
+<p>注意在 32 位模式中，寻址是通过段选择子指定的段描述符中的段基址 + 段内偏移的机制（如果对此不了解请看《Linux 内核完全注释》的 4.3 节）。因此在 IDT 表中，存放的每一个表项（也称为门描述符）必须包括两个部分：（中断处理函数所在的）段选择子和段内偏移。除此之外，还会将 EFLAGS，CS 和 EIP 寄存器压栈，如果特权级发生了改变还会涉及栈切换。</p>
+<p>该步骤的主要流程是：</p>
+<ul>
+<li>中断向量号 -&gt; 门描述符 -&gt; （段选择子 + 段内偏移）</li>
+<li>段选择子 -&gt; 段描述符 -&gt; 段基址</li>
+<li>（段基址 + 段内偏移 + 特权级检查通过） -&gt; 栈切换 -&gt; 寄存器压栈 -&gt; 装载 CS 和 EIP 寄存器，跳转</li>
+</ul>
+<p>另一个值得注意的地方是权限检查。需要同时满足两个条件才能跳转：</p>
+<ul>
+<li>当前特权级 CPL（存放在 CS 寄存器后两位）的值小于等于 IDT 表的门描述符中的 DPL</li>
+<li>当前特权级 CPL（存放在 CS 寄存器后两位）的值大于等于 GDT 表的段描述符（由门描述符中的段选择子指定）中的 DPL</li>
+</ul>
+<p>由于值越小优先级越大，这会保证系统调用前后程序的特权级不会降低。</p>
+<p>这里还有一个问题，就是 IDT 表中的门描述符是哪里设置好的呢？是在 main 函数中的初始化相关函数做的。函数调用路径为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">main() -&gt; sched_init() -&gt; set_system_gate() -&gt; _set_gate()<br></code></pre></td></tr></table></figure>
+
+<p>代码细节可以看李治军老师的 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV19r4y1b7Aw?p=5&vd_source=683a01bdc1972c35f5b27445f6fa8ccd">P5 节课程</a>。本实验的作业不需要对初始化部分进行改动。系统调用的门描述符会被初始化为：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">63                               48 47 46  44 43     40 39 37 36        32<br>+----------------------------------+--+----+--+--------+-+-+-+----------+<br>|<span class="hljs-string">                                  </span>|<span class="hljs-string">  </span>|<span class="hljs-string">    </span>|<span class="hljs-string">  </span>|<span class="hljs-string">        </span>|<span class="hljs-string">     </span>|<span class="hljs-string">          </span>|<br>|<span class="hljs-string">       &amp;system_call[31:16]        </span>|<span class="hljs-string">P </span>|<span class="hljs-string">DPL </span>|<span class="hljs-string">S </span>|<span class="hljs-string">  TYPE  </span>|<span class="hljs-string">0 0 0</span>|<span class="hljs-string"> Reserved </span>|<br>|<span class="hljs-string">                                  </span>|<span class="hljs-string">1 </span>|<span class="hljs-string"> 00 </span>|<span class="hljs-string">0 </span>|<span class="hljs-string"> 1</span>|<span class="hljs-string">1</span>|<span class="hljs-string">1</span>|<span class="hljs-string">1</span>|<span class="hljs-string">     </span>|<span class="hljs-string">          </span>|<br>+-------------+--+--+--+--+--------+--+----+--+--------+-+-+-+----------+<br>31                               17 16                                  0<br>+----------------------------------+------------------------------------+<br>|<span class="hljs-string">                                  </span>|<span class="hljs-string">                                    </span>|<br>|<span class="hljs-string">         Segment Selector         </span>|<span class="hljs-string">           &amp;system_call[15:0]       </span>|<br>|<span class="hljs-string">              0x0008              </span>|<span class="hljs-string">                                    </span>|<br>+----------------------------------+------------------------------------+<br></code></pre></td></tr></table></figure>
+
+<p>可见，系统调用的 CS 段选择符指向了内核代码段描述符，段内偏移是 <code>system_call</code> 的地址。</p>
+<p>（3）<code>system_call</code> -&gt; <code>sys_call_table</code></p>
+<p>中断向量号的个数往往很有限，但是需要的中断服务处理有很多种。解决方式是，将所有的系统调用都用同一个中断向量号 <code>int 0x80</code> 来表示，然后在 <code>system_call</code> 内部，根据系统调用号 <code>__NR__##name</code> 来确定具体的函数是什么。<code>sys_call_table</code> 就是存放这些函数的函数指针的数组，<code>__NR__##name</code> 是数组偏移。</p>
+<p>（4）查表 <code>sys_call_table</code> -&gt; <code>sys_write</code></p>
+<p><code>sys_call_table[__NR__write * 4] == sys_write </code> 。乘以 4 是因为在 32 位模式中，函数的入口地址为 32 位，<code>__NR__write * 4 </code>是入口的地址字节。 </p>
+<h3 id="实验参考-1"><a href="#实验参考-1" class="headerlink" title="实验参考"></a>实验参考</h3><p><a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/commit/caf3ae0e30bb2a0e58b7bcb79ebe7bf930940402">参考这个提交</a>。</p>
+<h3 id="易错点"><a href="#易错点" class="headerlink" title="易错点"></a>易错点</h3><h4 id="内核态函数的异常返回值"><a href="#内核态函数的异常返回值" class="headerlink" title="内核态函数的异常返回值"></a>内核态函数的异常返回值</h4><p>实际上，我们实现的是内核态函数 <code>sys_iam</code> 和 <code>sys_whoami</code>。但是在用户态不能直接调用它们，因此在 <code>iam.c</code> 和 <code>whoami.c</code> 借助了宏<code>_syscall1</code> 和 <code>_syscall2</code>，生成了用户态函数 <code>iam()</code> 和 <code>whoami()</code> 被调用。在 <code>_syscallx</code> 这些宏中，它们的返回值是这样的（以 <code>_syscall1</code> 为例）：</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs livescript"><span class="hljs-comment">#define _syscall1(type,name,atype,a) \</span><br>type name(atype a) <span class="hljs-string">\</span><br>&#123; <span class="hljs-string">\</span><br>long __res; <span class="hljs-string">\</span><br>__asm__ volatile (<span class="hljs-string">&quot;int $0x80&quot;</span> <span class="hljs-string">\</span><br>	: <span class="hljs-string">&quot;=a&quot;</span> (__res) <span class="hljs-string">\</span><br>	: <span class="hljs-string">&quot;0&quot;</span> (__NR_<span class="hljs-comment">##name),&quot;b&quot; ((long)(a))); \</span><br><span class="hljs-keyword">if</span> (__res &gt;= <span class="hljs-number">0</span>) <span class="hljs-string">\</span><br>	<span class="hljs-keyword">return</span> (type) __res; <span class="hljs-string">\</span><br>errno = -__res; <span class="hljs-string">\</span><br><span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>; <span class="hljs-string">\</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看出，这些宏会讲内核态函数的返回值作进一步的处理。当内核态函数的返回值大于等于零时视为正常，当小于零视为异常，并且会讲全局变量 <code>errno</code> 赋值 <code>-1</code>，并最终返回 <code>-1</code>。因此，在我们实现的内核态函数中，如果发生了异常，根据题意返回 <code>-(EINVAL)</code> 即可。</p>
+<h4 id="0x80-和-NR-name"><a href="#0x80-和-NR-name" class="headerlink" title="0x80 和 __NR__##name"></a><code>0x80</code> 和 <code>__NR__##name</code></h4><p>这两个都是整型，并且都是在数组中的偏移。区别在于，<code>0x80</code> 是中断向量，它是中断描述符表 IDT 的偏移，代表着这个中断是系统调用 ；而 <code>__NR__##name</code> 则是 <code>sys_call_table</code> 数组的偏移，被称为系统调用号，放在 EAX 寄存器中作为入参传递给内核。<code>sys_call_table</code> 里面的元素是函数指针，由 <code>__NR__##name</code> 确定调用哪个内核态的函数。IDT 和 <code>sys_call_table</code> 都是全局变量。</p>
+<h2 id="实验三-进程运行轨迹的跟踪与统计"><a href="#实验三-进程运行轨迹的跟踪与统计" class="headerlink" title="实验三 进程运行轨迹的跟踪与统计"></a>实验三 进程运行轨迹的跟踪与统计</h2><h3 id="实验内容-2"><a href="#实验内容-2" class="headerlink" title="实验内容"></a>实验内容</h3><p>进程从创建（Linux 下调用 <code>fork()</code>）到结束的整个过程就是进程的生命期，进程在其生命期中的<strong>运行轨迹实际上就表现为进程状态的多次切换</strong>，如进程创建以后会成为就绪态；当该进程被调度以后会切换到运行态；在运行的过程中如果启动了一个文件读写操作，操作系统会将该进程切换到阻塞态（等待态）从而让出 CPU；当文件读写完毕以后，操作系统会在将其切换成就绪态，等待进程调度算法来调度该进程执行……</p>
+<p>本次实验包括如下内容：</p>
+<ul>
+<li>基于模板 <code>process.c</code> 编写多进程的样本程序，实现如下功能：所有子进程都并行运行，每个子进程的实际运行时间一般不超过 30 秒； + 父进程向标准输出打印所有子进程的 id，并在所有子进程都退出后才退出；</li>
+<li>在 <code>Linux 0.11</code> 上实现进程运行轨迹的跟踪。 基本任务是在内核中维护一个日志文件 <code>/var/process.log</code>，把从操作系统启动到系统关机过程中所有进程的运行轨迹都记录在这一 log 文件中。</li>
+<li>在修改过的 0.11 上运行样本程序，通过分析 log 文件，统计该程序建立的所有进程的等待时间、完成时间（周转时间）和运行时间，然后计算平均等待时间，平均完成时间和吞吐量。可以自己编写统计程序，也可以使用 python 脚本程序—— <code>stat_log.py</code>（在 <code>/home/teacher/</code> 目录下） ——进行统计。</li>
+<li>修改 0.11 进程调度的时间片，然后再运行同样的样本程序，统计同样的时间数据，和原有的情况对比，体会不同时间片带来的差异。</li>
+</ul>
+<p><code>/var/process.log</code> 文件的格式必须为：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs txt">pid    X    time<br></code></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li>pid 是进程的 ID；</li>
+<li>X 可以是 N、J、R、W 和 E 中的任意一个，分别表示进程新建(N)、进入就绪态(J)、进入运行态(R)、进入阻塞态(W) 和退出(E)；</li>
+<li>time 表示 X 发生的时间。这个时间不是物理时间，而是系统的滴答时间(tick)；</li>
+</ul>
+<p>三个字段之间用制表符分隔。例如：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs txt">12    N    1056<br>12    J    1057<br>4    W    1057<br>12    R    1057<br>13    N    1058<br>13    J    1059<br>14    N    1059<br>14    J    1060<br>15    N    1060<br>15    J    1061<br>12    W    1061<br>15    R    1061<br>15    J    1076<br>14    R    1076<br>14    E    1076<br>......<br></code></pre></td></tr></table></figure>
+
+<h3 id="原理分析-2"><a href="#原理分析-2" class="headerlink" title="原理分析"></a>原理分析</h3><p>本实验有好几点内容，最核心的是第二点的修改内核代码，从而在 <code>/var/process.log</code> 文件中记录所有进程的运行轨迹。运行轨迹就是状态的切换，那么进程状态保存在哪里？回答是 <code>task_struct</code> 的 <code>state</code> 变量。 Linux 0.11 的状态都有哪些呢？答案在源码的 <code>sched.h</code> 文件中，一共有 5 个宏：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">define</span> TASK_RUNNING		0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> TASK_INTERRUPTIBLE	1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> TASK_UNINTERRUPTIBLE	2</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> TASK_ZOMBIE		3</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> TASK_STOPPED		4</span><br></code></pre></td></tr></table></figure>
+
+<p>虽然 <code>TASK_STOPPED</code> 被定义了，但是 Linux 0.11 代码中并没有将它赋值给任何 <code>task_struct</code> 的 <code>state</code>，因此 Linux 0.11 尚未实现该状态。</p>
+<p>因此，从代码上看，Linux 0.11 的可用状态一共只有 4 种。但它们和实验要求的新建（N）、进入就绪态（J）、进入运行态（R）、进入阻塞态（W） 和退出（E）不是一一对应的。比如， <code>TASK_RUNNING</code> 的对应两种状态：就绪态（J）和运行态（R）；而 <code>TASK_INTERRUPTIBLE</code> 和 <code>TASK_UNINTERRUPTIBLE</code> 通常都对应阻塞态（W）。但是有一个例外，即在 <code>copy_process</code> 中创建了进程后马上将该进程的状态置为 <code>TASK_UNINTERRUPTIBLE</code>，这里的含义应该就是实验内容中的新建（N），而不是阻塞态（W）。</p>
+<p>那么怎么能<strong>毫无遗漏地</strong>找到全部的状态切换点呢？我的方法是在源码里全局搜索上述的状态宏名，再全局搜索 <code>state</code> ，因为源码里有时候会直接给 <code>state</code> 赋值 0，而非 <code>TASK_RUNNING</code>。这样能确保找到全部状态切换点所在的函数，再去理解这些函数。下面依次分析不同的状态宏：</p>
+<h4 id="TASK-RUNNING"><a href="#TASK-RUNNING" class="headerlink" title="TASK_RUNNING"></a>TASK_RUNNING</h4><p>严格地说，<code>TASK_RUNNING</code> 有三种含义：就绪态，内核态运行，用户态运行，对应着实验要求两种状态：就绪态（J）和运行态（R）。它出现的地方有：</p>
+<ul>
+<li><code>fork.c</code> 的 <code>copy_process()</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">copy_process</span><span class="hljs-params">(...)</span> <span class="hljs-comment">// 入参省略</span><br>&#123;<br>    <span class="hljs-comment">// fork 和 copy_process() 的详细分析见实验四</span><br>	...<br>    p-&gt;state = TASK_RUNNING;	<span class="hljs-comment">/* do this last, just in case */</span><br>    <span class="hljs-comment">// 此时子进程 p 切换成就绪态（J）</span><br>	<span class="hljs-keyword">return</span> last_pid;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>sched.c</code> 的 <code>schedule()</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">schedule</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>	<span class="hljs-type">int</span> i,next,c;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">task_struct</span> ** <span class="hljs-title">p</span>;</span><br><br><span class="hljs-comment">/* check alarm, wake up any interruptible tasks that have got a signal */</span><br>	<span class="hljs-keyword">for</span>(p = &amp;LAST_TASK ; p &gt; &amp;FIRST_TASK ; --p)<br>		<span class="hljs-keyword">if</span> (*p) &#123;<br>			<span class="hljs-keyword">if</span> ((*p)-&gt;alarm &amp;&amp; (*p)-&gt;alarm &lt; jiffies) &#123;<br>					(*p)-&gt;signal |= (<span class="hljs-number">1</span>&lt;&lt;(SIGALRM<span class="hljs-number">-1</span>));<br>					(*p)-&gt;alarm = <span class="hljs-number">0</span>;<br>				&#125;<br>			<span class="hljs-keyword">if</span> (((*p)-&gt;signal &amp; ~(_BLOCKABLE &amp; (*p)-&gt;blocked)) &amp;&amp; (*p)-&gt;state==TASK_INTERRUPTIBLE)<br>                <span class="hljs-comment">// 如果进程 p 的信号位图中除去被阻塞的信号还有其他信号，那么它从阻塞态（W）切换为就绪态（J）</span><br>				(*p)-&gt;state=TASK_RUNNING;<br>		&#125;<br><br><span class="hljs-comment">/* this is the scheduler proper: */</span><br>	<span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>		c = <span class="hljs-number">-1</span>;<br>        <span class="hljs-comment">// 初始值为 0，如果没有可调度程序，会调度任务 0（虽然此时的任务 0 可能是阻塞态）。任务 0 只会执行系统调用 pause，又会进入这里</span><br>        <span class="hljs-comment">// 因此任务 0 是唯一一个可能从阻塞态到运行态的</span><br>		next = <span class="hljs-number">0</span>;<br>		i = NR_TASKS;<br>		p = &amp;task[NR_TASKS];<br>		<span class="hljs-keyword">while</span> (--i) &#123;<br>			<span class="hljs-keyword">if</span> (!*--p)<br>				<span class="hljs-keyword">continue</span>; <span class="hljs-comment">// 跳过不含任务的任务槽</span><br>			<span class="hljs-keyword">if</span> ((*p)-&gt;state == TASK_RUNNING &amp;&amp; (*p)-&gt;counter &gt; c) <span class="hljs-comment">// 两个条件：其一就绪，其二 counter 最大</span><br>				c = (*p)-&gt;counter, next = i;<br>		&#125;<br>		<span class="hljs-keyword">if</span> (c) <span class="hljs-keyword">break</span>; <span class="hljs-comment">// 如果存在某一个进程的 counter 不为 0（代表时间片未用完），或者没有可以运行的任务（c == -1）则跳出循环</span><br>		<span class="hljs-keyword">for</span>(p = &amp;LAST_TASK ; p &gt; &amp;FIRST_TASK ; --p)<br>			<span class="hljs-keyword">if</span> (*p)<br>				(*p)-&gt;counter = ((*p)-&gt;counter &gt;&gt; <span class="hljs-number">1</span>) + (*p)-&gt;priority;<br>	&#125;<br>    <span class="hljs-comment">// 如果 next 不为当前进程 current，那么在 switch_to 会将 current 切换为就绪态（J），next 切换为运行态（R）</span><br>    <span class="hljs-comment">// Linux 0.11 用 TASK_RUNNING 同时表示就绪态（J）和运行态（R），所以源码里不需要改变 current 和 next 的 state</span><br>    <span class="hljs-comment">// 但是按照本实验要求，需要将它们作区分并打印出来</span><br>	switch_to(next); <span class="hljs-comment">// 切换到另一个任务后，switch_to 同时实现指令流和 TSS 的切换，即其后半部分代码不会执行</span><br>&#125; <span class="hljs-comment">// 该括号不会执行，只有在原任务被切换回来才会继续执行</span><br></code></pre></td></tr></table></figure>
+
+<p><code>TASK_RUNNING</code> 以 0 出现的地方有：</p>
+<ul>
+<li><code>sched.c</code> 的 <code>sleep_on()</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 将当前任务（这里任务和进程是一个意思，但是任务更强调进程进入了内核态）置为不可中断的等待状态，并让睡眠队列头指针指向当前任务</span><br><span class="hljs-comment">// Linux 0.11 未采用真正链表的形式，而是通过内核栈中的 tmp 隐式串联起来</span><br><span class="hljs-comment">// wake_up 总是唤醒队列头指针指向的任务，而在 tmp 里面保存了后一个任务的地址</span><br><span class="hljs-comment">// 对于不可中断睡眠 (TASK_UNINTERRUPTIBLE) 只能由 wake_up 函数显式地从隐式等待队列头部唤醒队列头进程</span><br><span class="hljs-comment">// 再由这个队列头部进程执行 tmp-&gt;state = 0 依次唤醒等待队列</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">sleep_on</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> task_struct **p)</span> <span class="hljs-comment">// *p 为等待队列头指针，它总是指向最前面的等待任务</span><br>&#123;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">task_struct</span> *<span class="hljs-title">tmp</span>;</span><br><br>	<span class="hljs-keyword">if</span> (!p)<br>		<span class="hljs-keyword">return</span>;<br>	<span class="hljs-keyword">if</span> (current == &amp;(init_task.task)) <span class="hljs-comment">// current 为当前任务的指针</span><br>		panic(<span class="hljs-string">&quot;task[0] trying to sleep&quot;</span>);<br>	tmp = *p; <span class="hljs-comment">// tmp 指向队列中队列头指针指向的原等待任务</span><br>	*p = current; <span class="hljs-comment">// 队列头指针指向新加入的等待任务，即调用本函数的任务</span><br>	current-&gt;state = TASK_UNINTERRUPTIBLE; <span class="hljs-comment">// 当前进程 current 从运行态（R）切换成（不可中断的）阻塞态（W），只能用 wake_up() 唤醒</span><br>	schedule(); <span class="hljs-comment">// 本任务睡眠，切换到其他任务去了</span><br>    <span class="hljs-comment">// 当调用本函数的任务被唤醒并重新执行时（注意任务被唤醒后不一定会立刻执行它），将比它早进入等待队列中的那一个任务唤醒进入就绪状态</span><br>    <span class="hljs-comment">// 对于不可中断的睡眠，一定是严格按照“队列”的头部进行唤醒</span><br>	<span class="hljs-keyword">if</span> (tmp)<br>		tmp-&gt;state=<span class="hljs-number">0</span>; <span class="hljs-comment">// 进程 tmp（比它早进入等待队列中的那一个任务）变成就绪态（J）</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>sched.c</code> 的 <code>interruptible_sleep_on()</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 除了 wake_up 之外，可以用信号（存放在进程 PCB 中一个向量的某个位置）唤醒</span><br><span class="hljs-comment">// 与 sleep_on 不同，它会遇到一个问题，即可能唤醒等待队列中间的某个进程，此时需要适当调整队列。这是两个函数的主要区别</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">interruptible_sleep_on</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> task_struct **p)</span><br>&#123;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">task_struct</span> *<span class="hljs-title">tmp</span>;</span><br><br>	<span class="hljs-keyword">if</span> (!p)<br>		<span class="hljs-keyword">return</span>;<br>	<span class="hljs-keyword">if</span> (current == &amp;(init_task.task))<br>		panic(<span class="hljs-string">&quot;task[0] trying to sleep&quot;</span>);<br>	tmp=*p;<br>	*p=current;<br>     <span class="hljs-comment">// 当前进程 current 从运行态（R）切换成（可中断的）阻塞态（W），可以通过信号（在 schedule() 中）和 wake_up() 唤醒</span><br>repeat:	current-&gt;state = TASK_INTERRUPTIBLE;<br>	schedule();<br>    <span class="hljs-comment">// 当调用本函数的任务被唤醒并重新执行时，判断自己是否为队列头。如果不是（信号唤醒），则将队列头唤醒，并将自己睡眠，重新调度</span><br>	<span class="hljs-keyword">if</span> (*p &amp;&amp; *p != current) &#123;<br>		(**p).state=<span class="hljs-number">0</span>; <span class="hljs-comment">// 进程 **p 变成就绪态（J）</span><br>		<span class="hljs-keyword">goto</span> repeat;<br>	&#125;<br>	*p=<span class="hljs-literal">NULL</span>;<br>	<span class="hljs-keyword">if</span> (tmp)<br>		tmp-&gt;state=<span class="hljs-number">0</span>; <span class="hljs-comment">// 进程 tmp（比它早进入等待队列中的那一个任务）从阻塞态（W）切换成就绪态（J）</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>sched.c</code> 的 <code>wake_up()</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">wake_up</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> task_struct **p)</span><br>&#123;<br>	<span class="hljs-keyword">if</span> (p &amp;&amp; *p) &#123;<br>		(**p).state=<span class="hljs-number">0</span>; <span class="hljs-comment">// 进程 **p 从阻塞态（W）切换成就绪态（J）</span><br>		*p=<span class="hljs-literal">NULL</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面三个函数都和阻塞态有关。如果只是要完成实验，显然只需在 <code>state</code> 改变后加打印即可。但如果要彻底搞懂这三个函数，那比较困难。（可加图片进行分析）赵老师的《Linux 内核完全注释》第 8 章第 7 节对此做了详细分析。此外，赵老师还认为源码 <code>sleep_on</code> 和  <code>wake_up</code> 存在错误，但我认为应该没有错误，原因见<a target="_blank" rel="noopener" href="https://blog.csdn.net/fukai555/article/details/42169885">这里</a>。</p>
+<h4 id="TASK-INTERRUPTIBLE"><a href="#TASK-INTERRUPTIBLE" class="headerlink" title="TASK_INTERRUPTIBLE"></a>TASK_INTERRUPTIBLE</h4><p><code>TASK_INTERRUPTIBLE</code> 的含义是可中断睡眠&#x2F;阻塞状态。如果进程在内核态中需要等待系统的某个资源时，那么该进程就能通过 <code>interruptible_sleep_on()</code> 进入此状态； 通过信号和 <code>wake_up()</code> 都能将此状态切换为 <code>TASK_RUNNING</code>。它出现的地方有：</p>
+<ul>
+<li><p><code>sched.c</code> 的 <code>schedule()</code></p>
+</li>
+<li><p><code>sched.c</code> 的 <code>interruptible_sleep_on()</code></p>
+</li>
+</ul>
+<p>上面两个内核函数在对 <code>TASK_RUNNING</code> 分析已经出现过了。<code>schedule()</code> 中是通过判断信号，若满足条件则将 <code>TASK_INTERRUPTIBLE</code> 切换成 <code>TASK_RUNNING</code>。</p>
+<ul>
+<li><code>sched.c</code> 的 <code>sys_pause()</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 系统无事可做的时候，进程 0 会始终循环调用 sys_pause()，以激活调度算法</span><br><span class="hljs-comment">// 此时它的状态可以是等待态，等待有其它可运行的进程；也可以叫运行态，因为它是唯一一个在 CPU 上运行的进程，只不过运行的效果是等待</span><br><span class="hljs-comment">// 这里采用第二种方式，因为如果用第一种的方式，那么 /var/process.log 会多出来许多进程 0 的状态切换而冗杂</span><br><span class="hljs-comment">// 因此，打印的时候需要判断当前任务是否为 0，如果是则不进行打印</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">sys_pause</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>	current-&gt;state = TASK_INTERRUPTIBLE; <span class="hljs-comment">// 当前任务从运行态（R）切换为阻塞态（W）</span><br>	schedule();<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>exit.c</code> 的 <code>sys_waitpid()</code></li>
+</ul>
+<p><code>sys_waitpid()</code> 被用户态的 <code>waitpid()</code> 调用，<code>waitpid()</code> 被 <code>wait()</code> 调用，<code>wait()</code> 被任务 1 的初始化函数 <code>init()</code> 调用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 挂起当前进程，直到 pid 执行的子进程退出（终止）或者收到终止该进程的信号</span><br><span class="hljs-comment">// 如果 pid 所指的子进程已经僵死（TASK_ZOMBIE），则本调用立即返回</span><br><span class="hljs-comment">// 详细分析见《Linux 内核完全注释》</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">sys_waitpid</span><span class="hljs-params">(<span class="hljs-type">pid_t</span> pid,<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> * stat_addr, <span class="hljs-type">int</span> options)</span><br>&#123;<br>	...<br>	<span class="hljs-keyword">if</span> (flag) &#123;<br>		<span class="hljs-keyword">if</span> (options &amp; WNOHANG) <span class="hljs-comment">// waitpid 传进来的 options 为 0，因此不会立即返回</span><br>			<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>		current-&gt;state=TASK_INTERRUPTIBLE; <span class="hljs-comment">// 当前进程从就绪态（J）变成阻塞态（W）</span><br>		schedule();<br>        <span class="hljs-comment">// 重新调度本任务后，如果没有收到除了 SIGCHLD 以外的信号，还是重复处理</span><br>		<span class="hljs-keyword">if</span> (!(current-&gt;signal &amp;= ~(<span class="hljs-number">1</span>&lt;&lt;(SIGCHLD<span class="hljs-number">-1</span>))))<br>			<span class="hljs-keyword">goto</span> repeat;<br>		<span class="hljs-keyword">else</span><br>			<span class="hljs-keyword">return</span> -EINTR;<br>	&#125;<br>	<span class="hljs-keyword">return</span> -ECHILD;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="TASK-UNINTERRUPTIBLE"><a href="#TASK-UNINTERRUPTIBLE" class="headerlink" title="TASK_UNINTERRUPTIBLE"></a>TASK_UNINTERRUPTIBLE</h4><p><code>TASK_UNINTERRUPTIBLE</code> 的含义是不可中断睡眠&#x2F;阻塞状态。和 <code>TASK_INTERRUPTIBLE</code> 的区别是它只能通过 <code>wake_up()</code> 唤醒。它出现的地方有：</p>
+<ul>
+<li><code>fork.c</code> 的 <code>copy_process()</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">copy_process</span><span class="hljs-params">(...)</span> <span class="hljs-comment">// 入参省略</span><br>&#123;<br>    <span class="hljs-comment">// fork 和 copy_process() 的详细分析见实验四</span><br>	...<br>    <span class="hljs-comment">// get_free_page 获得一页(4KB)内存（内存管理中会讲，不能用 malloc 因为它是用户态的库代码，内核中不能用）</span><br>    <span class="hljs-comment">// 找到 mem_map 为 0（空闲）的那一页，将其地址返回。并且进行类型强制转换，即将该页内存作为 task_stuct(PCB)</span><br>    <span class="hljs-comment">// 这一页 4KB 专门用来存放 task_struct 和内核栈</span><br>	p = (<span class="hljs-keyword">struct</span> task_struct *) get_free_page();<br>	<span class="hljs-keyword">if</span> (!p)<br>		<span class="hljs-keyword">return</span> -EAGAIN;<br>	task[nr] = p;<br>	*p = *current;<br>    <span class="hljs-comment">// 新建任务 p 切换为 TASK_UNINTERRUPTIBLE，但是按照实验要求它对应着新建（N）</span><br>	p-&gt;state = TASK_UNINTERRUPTIBLE;<br>	...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>sched.c</code> 的 <code>sleep_on()</code></li>
+</ul>
+<p>该内核函数在对 <code>TASK_RUNNING</code> 分析已经出现过了。</p>
+<h4 id="TASK-ZOMBIE"><a href="#TASK-ZOMBIE" class="headerlink" title="TASK_ZOMBIE"></a>TASK_ZOMBIE</h4><p><code>TASK_ZOMBIE</code> 的含义是僵死状态。当进程已停止运行，但是其父进程还没有询问其状态时，则称该进程处于僵死状态。为了让父进程能够获取其停止运行的信息，此时该子进程的任务数据结构还需要保留着。一旦父进程调用 <code>wait()</code> 取得了子进程的信息，则处于该状态进程的任务数据结构会被释放掉。该状态出现的地方有：</p>
+<ul>
+<li><code>exit.c</code> 的 <code>do_exit()</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">do_exit</span><span class="hljs-params">(<span class="hljs-type">long</span> code)</span><br>&#123;<br>	<span class="hljs-type">int</span> i;<br>	<span class="hljs-comment">// 首先释放当前进程代码段和数据段所占的内存页</span><br>    <span class="hljs-comment">// 当前任务的 task_struct 所在内存页不在该函数中释放，而是通过父进程调用 wait()，最终在 release() 中释放</span><br>	free_page_tables(get_base(current-&gt;ldt[<span class="hljs-number">1</span>]),get_limit(<span class="hljs-number">0x0f</span>));<br>	free_page_tables(get_base(current-&gt;ldt[<span class="hljs-number">2</span>]),get_limit(<span class="hljs-number">0x17</span>));<br>	<span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span> ; i&lt;NR_TASKS ; i++)<br>		<span class="hljs-keyword">if</span> (task[i] &amp;&amp; task[i]-&gt;father == current-&gt;pid) &#123;<br>			task[i]-&gt;father = <span class="hljs-number">1</span>; <span class="hljs-comment">// 如果当前进程有子进程，就将子进程的 father 变为 init 进程</span><br>			<span class="hljs-keyword">if</span> (task[i]-&gt;state == TASK_ZOMBIE)<br>				<span class="hljs-comment">/* assumption task[1] is always init */</span><br>                <span class="hljs-comment">// 如果该子进程处于僵死 TASK_ZOMBIE 状态，则向 init 进程发送子进程终止信号 SIGCHLD</span><br>				(<span class="hljs-type">void</span>) send_sig(SIGCHLD, task[<span class="hljs-number">1</span>], <span class="hljs-number">1</span>);<br>		&#125;<br>	<span class="hljs-comment">// 关闭当前进程打开的全部文件</span><br>	<span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span> ; i&lt;NR_OPEN ; i++)<br>		<span class="hljs-keyword">if</span> (current-&gt;filp[i])<br>			sys_close(i);<br>    <span class="hljs-comment">// 对当前进程的当前工作目录，根目录和运行程序的 i 节点进行同步操作，放回各个 i 节点并置空</span><br>	iput(current-&gt;pwd);<br>	current-&gt;pwd=<span class="hljs-literal">NULL</span>;<br>	iput(current-&gt;root);<br>	current-&gt;root=<span class="hljs-literal">NULL</span>;<br>	iput(current-&gt;executable);<br>	current-&gt;executable=<span class="hljs-literal">NULL</span>;<br>	<span class="hljs-keyword">if</span> (current-&gt;leader &amp;&amp; current-&gt;tty &gt;= <span class="hljs-number">0</span>) <span class="hljs-comment">// 如果进程是一个会话头进程并有控制终端，则释放该终端</span><br>		tty_table[current-&gt;tty].pgrp = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">if</span> (last_task_used_math == current)<br>		last_task_used_math = <span class="hljs-literal">NULL</span>;<br>	<span class="hljs-keyword">if</span> (current-&gt;leader) <span class="hljs-comment">// 如果进程是一个 leader 进程，则终止该会话的所有相关进程</span><br>		kill_session();<br>	current-&gt;state = TASK_ZOMBIE; <span class="hljs-comment">// 当前进程 current 从运行态（R）切换成退出（E）</span><br>	current-&gt;exit_code = code;<br>	tell_father(current-&gt;father); <span class="hljs-comment">// 通知父进程，即向父进程发送信号 SIGCHLD 告知当前进程将终止</span><br>	schedule();<br>	<span class="hljs-keyword">return</span> (<span class="hljs-number">-1</span>);	<span class="hljs-comment">/* just to suppress warnings */</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>exit.c</code> 的 <code>sys_waitpid()</code></li>
+</ul>
+<p>在该函数中，<code>TASK_ZOMBIE</code> 只是作为 <code>switch-case</code> 的条件，没有赋给任何任务的 <code>task_struct</code> ，因此不需要增加打印。</p>
+<h4 id="TASK-STOPPED"><a href="#TASK-STOPPED" class="headerlink" title="TASK_STOPPED"></a>TASK_STOPPED</h4><p><code>TASK_STOPPED</code> 的含义是暂停状态。当进程收到信号 <code>SIGSTOP</code>、<code>SIGTSTP</code>、<code>SIGTTIN</code> 或 <code>SIGTTOU</code> 时会进入暂停状态。可向其发送 <code>SIGGCONT</code> 信号让进程切换成就绪状态。在 Linux 0.11 中，该状态仅作为 <code>switch-case</code> 的条件，因此 Linux 0.11 尚未实现该状态的转换处理，对其不需要增加打印。</p>
+<p>可见进程的状态切换点遍布源码各处，可以借此对 <code>fork.c</code>，<code>sched.c</code> 和 <code>exit.c</code> 以及 <code>main.c</code> 的 <code>init()</code> 函数通盘了解。</p>
+<h4 id="多进程样本程序"><a href="#多进程样本程序" class="headerlink" title="多进程样本程序"></a>多进程样本程序</h4><p><a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/blob/Experiment3_process_tracking_and_statistics/homework/process.c">process.c</a> 基于 <a target="_blank" rel="noopener" href="https://github.com/Wangzhike/HIT-Linux-0.11/blob/master/3-processTrack/linux-0.11/process.c">Wangzhike 仓库</a>的基础上加了少量注释和打印。</p>
+<h4 id="修改时间片"><a href="#修改时间片" class="headerlink" title="修改时间片"></a>修改时间片</h4><p>通过实验楼的<a target="_blank" rel="noopener" href="https://www.lanqiao.cn/courses/115/learning/?id=570">分析</a>，进程的时间片初值源于父进程的 <code>priority</code>，最终源于进程 0。它的时间片初值是在 <code>sched.h</code> 的进程 0 的宏定义中：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> INIT_TASK \</span><br><span class="hljs-meta"><span class="hljs-comment">// 三个值分别对应 state、counter 和 priority。这里的数值代表多少个时钟滴答（tick），在 Linux 0.11 软硬件系统中一个时钟滴答为 10ms</span></span><br><span class="hljs-comment">// 修改第二个值影响进程 0 的时间片初值，修改第三个值影响除进程 0 以外所有进程的时间片初值</span><br>    &#123; <span class="hljs-number">0</span>,<span class="hljs-number">15</span>,<span class="hljs-number">15</span>,<br></code></pre></td></tr></table></figure>
+
+<p>时间片设置过大，那么其他进程的等待时间会变长；时间片设置过小，那么进程调度次数&#x2F;耗时（这是一种内耗）变大。因此时间片不宜过小或过大，应合理设置。</p>
+<h3 id="实验参考-2"><a href="#实验参考-2" class="headerlink" title="实验参考"></a>实验参考</h3><p>本实验的作业可参考<a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/commit/595556a2a8500cf1610bb3b4019d0f09b68f9235">该提交</a>。注意在退出 Bochs 模拟器前，需要先在 Linux 0.11 shell 中执行 <code>exit</code>，这样 <code>process.c</code> 中的进程的状态信息才会输出到日志中。另外注意提供的 <code>stat_log.py</code> 使用的是过时的 Python2 语法，如果要在 Python3 环境运行，需要进行<a target="_blank" rel="noopener" href="https://dev.to/rohitnishad613/convert-python-2-to-python-3-in-1-single-click-2a8p">转换</a>。</p>
+<h3 id="实验报告-1"><a href="#实验报告-1" class="headerlink" title="实验报告"></a>实验报告</h3><ul>
+<li>结合自己的体会，谈谈从程序设计者的角度看，单进&#x2F;线程编程和多进&#x2F;线程编程最大的区别是什么？</li>
+</ul>
+<p>单进&#x2F;线程中代码的运行顺序是固定从上到下的，但是多进&#x2F;线程的运行顺序是不确定的，可能一会运行进程 A，之后某个未知时刻运行进程 B。对于 I&#x2F;O-bound 的任务（比如从网络请求数据，访问数据库，读写文件）显然多进&#x2F;线程的执行时间能更短。对于 CPU-bound 的任务（比如数值计算和图形处理），多进&#x2F;线程的优势在于能提供一个 UI 界面给用户，从而能监控管理这些任务（单进&#x2F;线启动了这些任务就没法中途停止或者显示状态，只能等待它们执行完毕）。</p>
+<h2 id="实验四-基于内核栈切换的进程切换"><a href="#实验四-基于内核栈切换的进程切换" class="headerlink" title="实验四 基于内核栈切换的进程切换"></a>实验四 基于内核栈切换的进程切换</h2><p>进程是操作系统的核心，进程的切换与创建是进程的核心。可以说本实验涉及到了操作系统最核心的地方，值得投入大量时间精力，力求弄懂涉及到的每一行代码。</p>
+<h3 id="实验内容-3"><a href="#实验内容-3" class="headerlink" title="实验内容"></a>实验内容</h3><p>原生 Linux 0.11 借助 TSS 的硬件机制（后面会有详细论述），一条指令就能完成任务切换。它虽然简单，但这条指令的执行时间却很长，在实现任务切换时大概需要 200 多个时钟周期。</p>
+<p>通过内核栈实现任务切换的时间更短，并且它还能使用指令流水的并行优化技术进一步优化时间。所以无论是 Linux 还是 Windows，进程&#x2F;线程的切换都没有使用 Intel 提供的这种 TSS 切换手段，而都是通过内核栈实现的。</p>
+<p>本次实验内容就是将原生 Linux 0.11 中采用的 TSS 切换部分去掉，取而代之的是基于内核栈的切换程序。</p>
+<h3 id="原理分析-3"><a href="#原理分析-3" class="headerlink" title="原理分析"></a>原理分析</h3><h4 id="基于-TSS-切换的进程切换"><a href="#基于-TSS-切换的进程切换" class="headerlink" title="基于 TSS 切换的进程切换"></a>基于 TSS 切换的进程切换</h4><p>这是 Linux 0.11 原生的方式，即进程切换会将原进程的硬件上下文保存到属于本进程的 TSS 段中，然后再将新进程的 TSS 段中之前保存的硬件上下文赋值给物理寄存器，从而实现进程切换。</p>
+<p>在该方式中，每个进程都会有自己单独的 TSS 段。TSS 是一个<strong>段</strong>（LDT 表也是一个段；但是 GDT 表不是，它只是一个结构体），在内核代码中用一个结构体 <code>tss_struct</code> 描述，保存在进程的 PCB，即 <code>task_struct</code> 结构体中。因此，进程的 TSS 段是其 PCB 结构体的一部分。</p>
+<p>整个流程是什么样的呢？</p>
+<p>（1）<code>int 0x80</code></p>
+<p>首先当然是从上一个进程的用户态通过中断（系统调用）进入内核。在实验二中已经描述过 <code>int 0x80</code> 会发生什么，但是现在看来还不够，缺少了对栈切换的描述。执行 <code>int 0x80</code> 指令后，堆栈会从用户栈切换到内核栈，并将此时的寄存器 SS、ESP（用户栈的状态），状态寄存器 EFLAGS 和用户态的下一条指令地址 CS、EIP 压栈。这里有几个问题：</p>
+<ul>
+<li><p>CPU 是怎么找到内核栈的？或者问，从内存的什么位置找到值赋给物理寄存器 SS、ESP？</p>
+<p>它们保存在进程的 TSS 段。想一想也是合理的，因为 TSS 就是用来保存进程的硬件上下文的，它不仅会保存进程的用户栈状态，还会保存内核栈初始状态。那是怎么找到当前进程的 TSS 段呢？这就需要引出 TR 寄存器了，它存放着指向当前进程 TSS 段的段选择子（进程切换时，会确保 TR 寄存器跟着切换）。</p>
+<p>串起来讲：系统调用发生时，CPU 会自动读取 TR 寄存器里的 TSS 段选择子，找到当前进程的 TSS 段描述符，TSS  描述符里面的段基址会指向当前进程的 TSS 段，最终能找到 TSS 段保存的内核栈初始值的 SS0 和 ESP0。那为什么 TSS 描述符的段基址会指向当前进程的 TSS 段呢？这是内核在 <code>fork</code> 出该进程时，在 <code>copy_process</code> 函数中通过 <code>set_tss_desc</code> 宏做的。</p>
+</li>
+<li><p>会跳转到内核的什么位置？</p>
+<p>实验二已分析过，系统调用后跳转的 CS 为 <code>0x0008</code>，是内核代码段的段选择子；EIP 为 <code>$system_call</code>，是系统调用函数的入口地址。这意味着所有进程从用户态通过系统调用进入内核时，它们用着一样的、共用的内核代码段（当然内核数据段也是一样的，它在 <code>system_call</code> 中被设置为 <code>0x0010</code>），跑着相同的代码。其实从 GDT 表也能看出来，最开始是内核代码段和数据段选择子（只有一份），接着是各个进程的 LDT 和 TSS 段选择子。</p>
+</li>
+<li><p>系统调用发生后，内核栈的 SS 和 ESP 初值是什么？</p>
+<p>SS 始终是 <code>0x0010</code>，即内核数据段的段选择子，而 ESP 也始终是固定的，为 <code>PAGE_SIZE + (long) p</code>，物理含义是，与当前进程的 PCB 在同一物理页，并且在该页的页顶（4KB）。它们源于 <code>fork</code> 该进程时的 <code>copy_process</code> 函数，截取相关片段如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">int</span> <span class="hljs-title function_">copy_process</span><span class="hljs-params">(<span class="hljs-type">int</span> nr,<span class="hljs-type">long</span> ebp,<span class="hljs-type">long</span> edi,<span class="hljs-type">long</span> esi,<span class="hljs-type">long</span> gs,<span class="hljs-type">long</span> none,</span><br><span class="hljs-params">		<span class="hljs-type">long</span> ebx,<span class="hljs-type">long</span> ecx,<span class="hljs-type">long</span> edx,</span><br><span class="hljs-params">		<span class="hljs-type">long</span> fs,<span class="hljs-type">long</span> es,<span class="hljs-type">long</span> ds,</span><br><span class="hljs-params">		<span class="hljs-type">long</span> eip,<span class="hljs-type">long</span> cs,<span class="hljs-type">long</span> eflags,<span class="hljs-type">long</span> esp,<span class="hljs-type">long</span> ss)</span> &#123;<br>    	...<br>		p = (<span class="hljs-keyword">struct</span> task_struct *) get_free_page(); <span class="hljs-comment">// 给当前 PCB 分配一个物理页（大小为 4KB）</span><br>    	...<br>        p-&gt;tss.esp0 = PAGE_SIZE + (<span class="hljs-type">long</span>) p; <span class="hljs-comment">// 内核栈的 ESP 初始值（PAGE_SIZE == 4096）</span><br>    	p-&gt;tss.ss0 = <span class="hljs-number">0x10</span>; <span class="hljs-comment">// 内核栈的 SS 初始值</span><br>    	...<br>		&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面代码可以说明，进程被 <code>fork</code> 出来后，第一次进入内核中的内核栈确实如此，但是之后再次进入内核还会是如此吗？</p>
+<p>答案是肯定的。在下面的 <code>switch_to</code> 宏中的 <code>ljmp *%0</code> 中，它只会将当前的内核栈压入 <code>tss.ss</code> 和 <code>tss.esp</code> 中，而不会改变 <code>tss.esp0</code> 和 <code>tss.ss0</code>，即它们是只读的，专门用于从低特权级转换到 0 特权级时给栈赋初值。也就是说，进程刚从用户态进入其内核态时（注意区别于从一个进程的内核态切换到另一个进程的内核态），它的内核栈总是被赋相同的初值，即总是空的。这也是合理的，进程的内核栈总大小只有 <code>4096 - sizeof(task_struct)</code> 个字节（用户栈通常为几 MB，堆则可以到几 GB），如果每发生一次系统调用，内核栈的空间会减少，那么内核栈很快就被用光了。</p>
+</li>
+</ul>
+<p>(2) 进入 <code>switch_to</code> 之前</p>
+<p>在进入  <code>switch_to</code> 之前，程序流依次为：</p>
+<p><code>int 0x80</code> -&gt; <code>system_call</code> -&gt; <code>reschedule</code> -&gt; <code>schedule</code> -&gt; <code>switch_to</code>。</p>
+<p><code>reschedule</code> 只是简单地将 <code>&amp;ret_from_sys_call</code> 压栈然后跳转到 <code>schedule</code> 函数。</p>
+<p><code>schedule</code> 函数中有调度算法，即找到下一个需要被调度&#x2F;切换进程，然后调用 <code>switch_to</code> 宏函数。</p>
+<p><code>switch_to</code> 是实现进程切换的地方。它的前半部分指令在切换前进程执行，后半部分指令已经切换到下一个进程了。也就是说，当执行到 <code>switch_to</code> 的后半部分指令时，已经是下一个进程在执行了。</p>
+<p>下表给出了在进入<code>switch_to</code> 之前的内核栈状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs shell">+----------------------------------------------------------+<br>| # push by hardware                                       |<br>| SS                                                       |<br>| ESP                                                      |<br>| EFLAGS                                                   |<br>| CS                                                       |<br>| EIP                                                      |<br>+----------------------------------------------------------+<br>| # push in `system_call`                                  |<br>| DS                                                       |<br>| ES                                                       |<br>| FS                                                       |<br>| EDX                                                      |<br>| ECX                                                      |<br>| EBX # EDX, ECX and EBX as parameters to `system_call`    |<br>| EAX # return value of `sys_call_table(,%eax,4)`          |<br>+----------------------------------------------------------+<br>| # push in `reschedule`                                   |<br>| &amp;ret_from_sys_call                                       |<br>+----------------------------------------------------------+<br>| # push in `schedule`                                     |<br>| EBP                                                      |<br>+----------------------------------------------------------+<br></code></pre></td></tr></table></figure>
+
+<p>注意，<code>switch_to</code> 是一个宏，因此<code>schedule</code>调用 <code>switch_to</code> 时，不会进行压栈操作。</p>
+<p>现在我们先不深入<code>switch_to</code> ，先考虑五段论的最后一段，即切换到下一个进程后，从它的内核态切换到用户态的过程是怎么样的。</p>
+<p>如果下一个进程不是第一次被调度，那么切换到下一个进程时，它的内核栈保存了什么呢？</p>
+<p>显然就和上图一样，这时因为，如果它不是第一次被调度，那么它处于阻塞前同样会通过 <code>switch_to</code> 切换到别的进程中（内核代码对于多个进程是共用的）。如果是进程第一次被调度，那么就需要看 <code>fork</code> 的时候做了什么，下一小节会分析。</p>
+<p>同时，切换后下一个进程执行的指令位于<code>switch_to</code> 中，最终会走到 C 语言函数 <code>schedule</code>的右括号。C 语言函数被编译后，最后三行的汇编代码为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">mov %ebp, %esp<br>popl %ebp # 弹出 EBP<br>ret # 跳转到 ret_from_sys_call 执行指令<br></code></pre></td></tr></table></figure>
+
+<p>EBP 是<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000007977460">栈帧</a>结构。总之，内核栈会先将 EBP 弹出， 然后跳转到 <code>ret_from_sys_call</code> 执行那里的指令。</p>
+<p>（3）<code>ret_from_sys_call</code></p>
+<p>执行完该函数，进程就会从内核态切换到用户态。显然它会将此时内核栈的寄存器弹出，然后靠一条 <code>IRET</code> 指令中断返回。 <code>IRET</code> 指令会将 EIP，CS，EFLAGS，ESP，SS 依次弹出到相应寄存器上。最终内核栈<strong>清零</strong>，进程返回用户态。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs assembly">ret_from_sys_call:<br>	# 省略了信号相关的代码<br>	# 由下可见 ret_from_sys_call 会弹出一系列寄存器并且最后 IRET，清空内核栈并且返回进程的用户态<br>3:	popl %eax<br>	popl %ebx<br>	popl %ecx<br>	popl %edx<br>	pop %fs<br>	pop %es<br>	pop %ds<br>	iret<br></code></pre></td></tr></table></figure>
+
+<p>（4）<code>switch_to</code> </p>
+<p>再回到 <code>switch_to</code>。它是进程实际发生切换的地方，也比较难理解。代码虽然短，但是硬件自动完成了很多事情。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> switch_to(n) &#123;\</span><br><span class="hljs-meta">struct &#123;long a,b;&#125; __tmp; \</span><br><span class="hljs-meta">__asm__(<span class="hljs-string">&quot;cmpl %%ecx,current\n\t&quot;</span> \</span><br><span class="hljs-meta">	<span class="hljs-string">&quot;je 1f\n\t&quot;</span> \</span><br><span class="hljs-meta">	<span class="hljs-string">&quot;movw %%dx,%1\n\t&quot;</span> \</span><br><span class="hljs-meta">	<span class="hljs-string">&quot;xchgl %%ecx,current\n\t&quot;</span> \</span><br><span class="hljs-meta">	<span class="hljs-string">&quot;ljmp *%0\n\t&quot;</span> \</span><br><span class="hljs-meta">	<span class="hljs-string">&quot;cmpl %%ecx,last_task_used_math\n\t&quot;</span> \</span><br><span class="hljs-meta">	<span class="hljs-string">&quot;jne 1f\n\t&quot;</span> \</span><br><span class="hljs-meta">	<span class="hljs-string">&quot;clts\n&quot;</span> \</span><br><span class="hljs-meta">	<span class="hljs-string">&quot;1:&quot;</span> \</span><br><span class="hljs-meta">	::<span class="hljs-string">&quot;m&quot;</span> (*&amp;__tmp.a),<span class="hljs-string">&quot;m&quot;</span> (*&amp;__tmp.b), \</span><br><span class="hljs-meta">	<span class="hljs-string">&quot;d&quot;</span> (_TSS(n)),<span class="hljs-string">&quot;c&quot;</span> ((long) task[n])); \</span><br><span class="hljs-meta">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>switch_to</code> 是一段嵌入汇编的 C 语言宏函数。这里不介绍其语法，详细可先参考《Linux 内核完全注释》的第 3.3.2 节。</p>
+<p><code>switch_to</code> 有四个输入：<code>*&amp;__tmp.a</code>，<code>*&amp;__tmp.b</code>，<code>_TSS(n)</code> 和 <code>(long) task[n]</code>。</p>
+<p> <code>(long) task[n]</code> 是下一个任务的 PCB 结构体指针，执行汇编指令前它被保存在 ECX 寄存器中；</p>
+<p><code>_TSS(n)</code> 是下一个任务的 TSS 段选择符，执行汇编指令前它被保存在 EDX 寄存器中；</p>
+<p><code>*&amp;__tmp.b</code> 用于存放要下一个任务的 TSS 段选择符。执行汇编指令前它的值是随机的，在汇编指令中同步由 <code>movw %%dx,%1\n\t</code> 被赋值为要切换进程的 TSS 段选择符（ <code>%1</code> 代表 <code>*&amp;__tmp.b</code>）。</p>
+<p><code>*&amp;__tmp.a</code> 用于存放 32 位段内偏移地址，但它是无用的，它的值不重要。需要它只是因为 <code>ljmp</code> 需要段选择符 + 段内偏移的形式。</p>
+<p>因此，<code>switch_to</code> 代码的步骤为：</p>
+<p>（1）判断要切换的进程是否为当前进程，如果是则直接调到标号 1 处直接结束，否则继续执行下一条指令。</p>
+<p>（2）将 EDX 赋值给 <code>*&amp;__tmp.a</code>，即 <code>__tmp.a</code>。不清楚为什么要先取 <code>&amp;</code> 再取 <code>*</code>。</p>
+<p>（3）交换 ECX 和 <code>current</code> 的值。<code>current</code> 是个全局变量，它是当前进程 PCB 结构体的指针。此后，操作系统会将下一个进程视为当前进程。</p>
+<p>（4）执行 <code>ljmp *%0\n\t</code>。虽然这只是一条汇编指令，但是硬件会做许多事情，执行时间长达 200+ 个时钟周期，这也是要使用内核栈切换的原因。它要做的事情是：将当前所有的物理寄存器（EAX&#x2F;EBX&#x2F;ECX&#x2F;EDX&#x2F;ESI&#x2F;EDI&#x2F;EBP&#x2F;ESP&#x2F;EIP&#x2F;EFLAGS&#x2F;CR3&#x2F;CS&#x2F;DS&#x2F;ES&#x2F;FS&#x2F;GS&#x2F;SS&#x2F;LDTR）的快照保存到切换前进程的 TSS 段中（通过 TR 寄存器中的 TSS 段选择符找到的），然后将下一个进程的 TSS 段中保存的寄存器快照赋值给物理寄存器，并将 TR 寄存器设置为下一个进程的 TSS 段选择子。</p>
+<p>注意，当执行完 <code>ljmp *%0\n\t</code> 后，包括 CS，EIP，ESP，SS 在内的全部寄存器都变成下一个进程的了。也就是说，它的下一条指令<code>cmpl %%ecx,last_task_used_math\n\t</code> 是下一个进程在执行。如果下一个进程是第一次被调度，那么它的 CS 和 EIP 是指向进程用户态的代码（因为在 <code>fork</code> 中 CS 和 EIP 被赋值为用户态的代码，下一小节有分析），即下一条指令会执行下一个进程的用户态代码；如果不是，下一条指令还是 <code>cmpl %%ecx,last_task_used_math</code>，因为下一个进程在之前某个时间切换出去时也是执行了内核代码流程，执行了相同的<code>switch_to</code>，但应牢记此时已经是切换后进程了。</p>
+<p>（5）最后是处理协处理器相关事情，和进程切换的关系不大，可忽略。</p>
+<h4 id="基于-TSS-切换的进程创建"><a href="#基于-TSS-切换的进程创建" class="headerlink" title="基于 TSS 切换的进程创建"></a>基于 TSS 切换的进程创建</h4><p>正如李治军老师反复强调，进程创建，就是去做出它被第一次切换时候的样子。因而进程切换是进程创建的基础。</p>
+<p>创建进程会设置什么呢？当然是进程相关的信息，包括设置进程的 PID，LDT 表（设置其中的用户代码段和数据段描述符），页目录项和页表项，LDT 和 TSS 段描述符等。除此之外，少不了进程的硬件上下文。在基于 TSS 切换的进程创建中，硬件上下文是保存在 TSS 段的，因此进程创建时也需要设置好进程的 TSS 段。</p>
+<p>整个流程是什么样的呢？</p>
+<p>（1）<code>fork</code> API</p>
+<p>这个 <code>fork</code> 是用户态的，对于用户程序而言，它是 C 语言库提供的 API。在 Linux 0.11 中，也提供了一个用户态的 <code>fork</code> API。提供它是因为，在内核通过 <code>move_to_user_mode</code> 切换到任务 0，任务 0 是用户态的，之后也需要借助用户态的 <code>fork</code> API 创建任务 1。</p>
+<p>实现用户态的 <code>fork</code> API 十分简单，只需要利用 <code>_syscall0</code> 宏函数就能生成。这是实验二系统调用的相关知识。宏展开后，<code>fork</code> API 会变成：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">int</span> <span class="hljs-title function_">fork</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-type">long</span> __res;<br>    __asm__ <span class="hljs-title function_">volatile</span> <span class="hljs-params">(<span class="hljs-string">&quot;int $0x80&quot;</span></span><br><span class="hljs-params">        : <span class="hljs-string">&quot;=a&quot;</span> (__res)</span><br><span class="hljs-params">        : <span class="hljs-string">&quot;0&quot;</span> (__NR_fork))</span>;<br>    <span class="hljs-keyword">if</span> (__res &gt;= <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">return</span> (<span class="hljs-type">int</span>) __res;<br>    errno = -__res;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看出，正常情况下 <code>fork</code> API 的返回值为 <code>__res</code>，而且是通过寄存器 EAX 赋值给 <code>__res</code> 的。</p>
+<p>fork 的一个使用例子为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span>&#123;<br><br>    <span class="hljs-type">pid_t</span> PID = fork();<br><br>    <span class="hljs-keyword">switch</span>(PID) &#123; <br>        <span class="hljs-comment">// PID == -1 代表 fork 出錯</span><br>        <span class="hljs-keyword">case</span> <span class="hljs-number">-1</span>:<br>            perror(<span class="hljs-string">&quot;fork()&quot;</span>);<br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">-1</span>);<br>        <span class="hljs-comment">// PID == 0 代表是子进程</span><br>        <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;I&#x27;m Child process\n&quot;</span>);<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Child&#x27;s PID is %d\n&quot;</span>, getpid());<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-comment">// PID &gt; 0 代表是父进程</span><br>        <span class="hljs-keyword">default</span>:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;I&#x27;m Parent process\n&quot;</span>);<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Parent&#x27;s PID is %d\n&quot;</span>, getpid());<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可见在用户程序中，是通过 <code>fork</code> API 的返回值来区分父进程和子进程的。因此可以推断，在 <code>fork</code> API 的宏展开中，对于子进程，它的 EAX 应该被赋 0，而父进程的 EAX 应该被赋子进程的 PID 号。</p>
+<p>（2） <code>sys_fork</code></p>
+<p><code>fork</code> 也是系统调用，进入 <code>sys_fork</code> 之前，流程为：<code>int 0x80</code> -&gt; <code>system_call</code> -&gt; <code>sys_call_table</code> -&gt; <code>sys_fork</code>。这和实验二系统调用一致。</p>
+<p>在 <code>sys_fork</code> 首先会调用 <code>find_empty_process</code> C 语言函数，它会为新进程分配不重复的 PID 号，保存在全局变量 <code>last_pid</code> 中，同时在 PCB 数组中分配一个空闲项，并返回其下标号。如果为负则分配失败，直接退出；否则经过将一系列的物理寄存器压栈后，调用 C 语言函数 <code>copy_process</code>。在执行 <code>copy_process</code> 前，内核栈的内容为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs shell">+----------------------------------------------------------+<br>| # push by hardware                                       |<br>| SS                                                       |<br>| ESP                                                      |<br>| EFLAGS                                                   |<br>| CS                                                       |<br>| EIP                                                      |<br>+----------------------------------------------------------+<br>| # push in `system_call`                                  |<br>| DS                                                       |<br>| ES                                                       |<br>| FS                                                       |<br>| EDX                                                      |<br>| ECX                                                      |<br>| EBX # EDX, ECX and EBX as parameters to `system_call`    |<br>| &amp;(pushl %eax) # push by `call sys_call_table(,%eax,4)`   |<br>+----------------------------------------------------------+<br>| # push in `sys_fork`                                     |<br>| GS                                                       |<br>| ESI                                                      |<br>| EDI                                                      |<br>| EBP                                                      |<br>| EAX # return value of `find_empty_process`               |<br>| &amp;(addl $20,%esp) # push by `copy_process`                |<br>+----------------------------------------------------------+<br></code></pre></td></tr></table></figure>
+
+<p>（3）<code>copy_process</code></p>
+<p><code>copy_process</code> 是完成新进程初始化的主体。先看其函数头：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">int</span> <span class="hljs-title function_">copy_process</span><span class="hljs-params">(</span><br><span class="hljs-params">	<span class="hljs-type">int</span> nr,<span class="hljs-type">long</span> ebp,<span class="hljs-type">long</span> edi,<span class="hljs-type">long</span> esi,<span class="hljs-type">long</span> gs,<span class="hljs-type">long</span> none,</span><br><span class="hljs-params">	<span class="hljs-type">long</span> ebx,<span class="hljs-type">long</span> ecx,<span class="hljs-type">long</span> edx,<span class="hljs-type">long</span> fs,<span class="hljs-type">long</span> es,<span class="hljs-type">long</span> ds,</span><br><span class="hljs-params">	<span class="hljs-type">long</span> eip,<span class="hljs-type">long</span> cs,<span class="hljs-type">long</span> eflags,<span class="hljs-type">long</span> esp,<span class="hljs-type">long</span> ss)</span><br></code></pre></td></tr></table></figure>
+
+<p>在 C 语言函数的调用中，函数入参靠栈传递，而且是逆序的（<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000007977460">这里</a>有对 C 语言函数栈帧的分析）。即入参在越左边，它越后入栈。这么规定估计是为了方便定位到入参，例如在被调函数的栈帧中， <code>8(%ebp)</code> 是第一个入参，<code>12(%ebp)</code> 是第二个入参，以此类推。</p>
+<p>总之，<code>copy_process</code> 的函数头能够和内核栈完全对应起来，例如函数最左边的入参 <code>nr</code> 对应内核栈倒数第二的 <code>EAX</code>。</p>
+<p>在 <code>copy_process</code> 函数中完成了进程的初始化，包括设置进程的 PID，LDT 表，页目录项和页表项，LDT 和 TSS 段描述符等。但在本实验中，我们只需要关注它的硬件上下文的初始化。原生的 Linux 0.11 将硬件上下文保存在 TSS 段，因此是对该进程的 TSS 段进行初始化。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">int</span> <span class="hljs-title function_">copy_process</span><span class="hljs-params">(</span><br><span class="hljs-params">	<span class="hljs-type">int</span> nr,<span class="hljs-type">long</span> ebp,<span class="hljs-type">long</span> edi,<span class="hljs-type">long</span> esi,<span class="hljs-type">long</span> gs,<span class="hljs-type">long</span> none,</span><br><span class="hljs-params">	<span class="hljs-type">long</span> ebx,<span class="hljs-type">long</span> ecx,<span class="hljs-type">long</span> edx,<span class="hljs-type">long</span> fs,<span class="hljs-type">long</span> es,<span class="hljs-type">long</span> ds,</span><br><span class="hljs-params">	<span class="hljs-type">long</span> eip,<span class="hljs-type">long</span> cs,<span class="hljs-type">long</span> eflags,<span class="hljs-type">long</span> esp,<span class="hljs-type">long</span> ss)</span> &#123;<br><br>		p = (<span class="hljs-keyword">struct</span> task_struct *) get_free_page(); <span class="hljs-comment">// 申请一页物理页存放子进程的 PCB 结构体</span><br>		<span class="hljs-comment">// 中间省略了与初始化 TSS 无关的代码</span><br>		p-&gt;tss.back_link = <span class="hljs-number">0</span>;<br>        p-&gt;tss.esp0 = PAGE_SIZE + (<span class="hljs-type">long</span>) p; <span class="hljs-comment">// 内核栈（初始值）放在与 PCB 相同物理页的页面顶端</span><br>        p-&gt;tss.ss0 = <span class="hljs-number">0x10</span>; <span class="hljs-comment">// 内核数据段选择符</span><br>        p-&gt;tss.eip = eip; <span class="hljs-comment">// 拷贝了父进程的用户态的指令偏移</span><br>        p-&gt;tss.eflags = eflags;<br>        p-&gt;tss.eax = <span class="hljs-number">0</span>; <span class="hljs-comment">// 作为用户态的 fork API 的返回值</span><br>        p-&gt;tss.ecx = ecx;<br>        p-&gt;tss.edx = edx;<br>        p-&gt;tss.ebx = ebx;<br>        p-&gt;tss.esp = esp; <span class="hljs-comment">// 拷贝了父进程的用户栈（但是内核栈是独立的）</span><br>        p-&gt;tss.ebp = ebp;<br>        p-&gt;tss.esi = esi;<br>        p-&gt;tss.edi = edi;<br>        p-&gt;tss.es = es &amp; <span class="hljs-number">0xffff</span>;<br>        p-&gt;tss.cs = cs &amp; <span class="hljs-number">0xffff</span>; <span class="hljs-comment">// 拷贝了父进程的用户态的段选择符</span><br>        p-&gt;tss.ss = ss &amp; <span class="hljs-number">0xffff</span>;<br>        p-&gt;tss.ds = ds &amp; <span class="hljs-number">0xffff</span>;<br>        p-&gt;tss.fs = fs &amp; <span class="hljs-number">0xffff</span>;<br>        p-&gt;tss.gs = gs &amp; <span class="hljs-number">0xffff</span>;<br>        p-&gt;tss.ldt = _LDT(nr); <span class="hljs-comment">// LDT 段选择符</span><br>        p-&gt;tss.trace_bitmap = <span class="hljs-number">0x80000000</span>;<br>        <span class="hljs-comment">// 中间省略了与初始化 TSS 无关的代码</span><br>		<span class="hljs-keyword">return</span> last_pid; <span class="hljs-comment">// 返回子进程的 PID</span><br>	&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可见，子进程在创建的时候几乎全部寄存器都拷贝了父进程的，除了内核栈与 EAX。当 <code>copy_process</code> 执行完毕后子进程就创建好了，但还没有开始调度。只有等到父进程回到 <code>system_call</code>，进入了 <code>schedule</code>，其调度算法选择了子进程。这样在 <code>switch_to</code> 函数中才会切换到子进程。如果子进程是第一次被调度，那么它的 TSS 段就是 <code>copy_process</code> 时赋的值，EAX 为 0，<code>fork</code> API 的返回值也就是 0，并且会直接返回用户态。而对于父进程而言，<code>copy_process</code> 的返回值为 <code>last_pid</code> ，编译后通过 EAX 返回，因此 <code>fork</code> API 的返回值也就是 <code>last_pid</code>。</p>
+<h4 id="基于内核栈切换的进程切换"><a href="#基于内核栈切换的进程切换" class="headerlink" title="基于内核栈切换的进程切换"></a>基于内核栈切换的进程切换</h4><p>虽然基于 TSS 切换的进程切换的内核代码写起来简单，但是它的执行时间长，长达 200 多个时钟周期，所以为了减少进程切换时间开销，本实验将其改成基于内核栈切换的进程切换。进程切换改了，进程创建当然也要跟着改。现在的 Linux 用的都是内核栈切换这种方法了。</p>
+<p>实验手册对该部分的讲解很清晰。下面是实验手册没有深入讨论的几个问题：</p>
+<ul>
+<li><p>是否还需要 TSS？</p>
+<p>需要。因为虽然现在不是靠 TSS 做进程切换了，但是当进程进入内核时，还是要依赖 TSS 去找到内核栈，这是硬件提供的方法，也是限制。但是与之前不同，现在可以只需要一个 TSS 段，TR 寄存器永远指向该 TSS 段，进程切换不会改变 TR 寄存器，而是会改变该 TSS 段的 ESP0 的内容，将 ESP0 赋值为该进程 <code>task_struct</code> 相同的物理页的页顶。SS0 不用改是因为所有进程的 SS0 都是 <code>0x10</code>，即指向内核数据段。</p>
+</li>
+<li><p>TSS 是否还需要是 <code>task_struct</code> 中的成员？</p>
+<p>我认为不需要了。因为之前每个进程都是有自己的 TSS，但现在是共用的，完全可以将它抽取出来，作为独立的全局变量，而不是放在 <code>task_struct</code> 里面。但是实验指导还是将 TSS 放在 <code>task_struct</code> 里面，虽然这么做会浪费空间但不影响功能，猜测是因为代码改动量会比较少，所以就没有将它抽取出来。</p>
+</li>
+<li><p>为什么要将 <code>switch_to</code> 从宏函数改成（汇编写的）函数？</p>
+<p>我认为这是和李治军老师讲的用户级线程一节中的 <code>yield</code> 函数保持一致。<code>yield</code> 函数是普通函数，最后有 <code>RET</code> 指令，就是要靠 <code>RET</code> 指令去弹出另一个线程的栈顶，继续执行另一个线程在切换前的地方。但如果 <code>switch_to</code> 还用宏函数是否可以呢？我认为是可以的，因为内核代码对于所有进程是共用的，另一个进程切换前的地方就是当前进程切换前的地方。</p>
+</li>
+<li><p>为什么要修改 <code>switch_to</code> 的入参？</p>
+<p>我认为这能简化代码。<code>switch_to</code> 的入参可以保持为 <code>next</code>，但这样需要在汇编代码中计算 <code>pnext</code> 和 <code>LDT(next)</code>。显然将它们传递给汇编代码更简单。</p>
+</li>
+</ul>
+<h4 id="基于内核栈切换的进程创建"><a href="#基于内核栈切换的进程创建" class="headerlink" title="基于内核栈切换的进程创建"></a>基于内核栈切换的进程创建</h4><p>创建子进程就是要创建出第一次切换到子进程的样子。</p>
+<p>在基于 TSS 切换的进程创建中，在 <code>copy_process</code> 函数内将父进程的用户态寄存器赋值到了子进程的 TSS 段。而现在需要将它们赋值给子进程的内核栈作为初始值，靠着内核栈弹出赋值给子进程的寄存器。</p>
+<p>想象第一次切换到子进程时，程序指令流会怎么走呢？</p>
+<p>与基于 TSS 切换的进程创建不同，此时并不会切换 CS 和 EIP。指令流会在 <code>switch_to</code> 中继续往下走，因此我们是<strong>根据指令流去推导内核栈的初始值</strong>。切换为子进程后，<code>switch_to</code> 中与栈相关的指令为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs assembly">1:  popl %eax<br>    popl %ebx<br>    popl %ecx<br>    popl %ebp<br>ret<br></code></pre></td></tr></table></figure>
+
+<p>因此内核栈末尾（后进先出）应该要压入 EAX，EBX，ECX，EBP 这四个寄存器。注意 EAX 应该赋值为 0 ，它作为子进程系统调用的返回值。即在 <code>copy_process</code> 函数中，内核栈末尾应该这样赋值：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-comment">// `switch_to` will pop them out</span><br>*(--krnstack) = ebp;<br>*(--krnstack) = ecx;<br>*(--krnstack) = ebx;<br>*(--krnstack) = <span class="hljs-number">0</span>; <span class="hljs-comment">// child process&#x27;s EAX(return value) is 0</span><br></code></pre></td></tr></table></figure>
+
+<p>最后一条指令为 <code>RET</code>，它的作用是将内核栈顶弹出并且跳转该地址执行代码。由于此时内核栈的内容是我们设置的，因此可以新建一个函数，让指令流跳转到新建的函数中。新建函数名为 <code>first_return_from_kernel</code>。在 <code>copy_process</code> 函数中，内核栈应该赋值 <code>first_return_from_kernel</code> 函数地址：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">*(--krnstack) = (<span class="hljs-type">long</span>) first_return_from_kernel;<br></code></pre></td></tr></table></figure>
+
+<p>在新建的函数应该做些什么呢？我们希望<strong>当子进程回到用户态时，它的所有寄存器都拷贝父进程的</strong>。所以需要将父进程的寄存器赋给子进程的内核栈初始值，那么切换到子进程时就能靠内核栈弹出赋给物理寄存器。前面我们已经在内核栈末尾弹出了 EAX&#x2F;EBX&#x2F;ECX&#x2F;EBP 这 4 个寄存器，经过和 <code>copy_process</code> 的函数原型比较后，还需要将 EDI&#x2F;ESI&#x2F;GS&#x2F;EDX&#x2F;FS&#x2F;GS&#x2F;DS&#x2F;SS&#x2F;ESP&#x2F;EFLAGS&#x2F;CS&#x2F;EIP  共 11 个寄存器弹出。</p>
+<p>因此在 copy_process 函数中需要在内核栈中赋值这 11 个寄存器：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// `iret` will pop them out</span><br>*(--krnstack) = ss &amp; <span class="hljs-number">0xffff</span>;<br>*(--krnstack) = esp;<br>*(--krnstack) = eflags;<br>*(--krnstack) = cs &amp; <span class="hljs-number">0xffff</span>;<br>*(--krnstack) = eip;<br><br><span class="hljs-comment">// `first_return_from_kernel` will pop them out</span><br>*(--krnstack) = ds &amp; <span class="hljs-number">0xffff</span>;;<br>*(--krnstack) = es &amp; <span class="hljs-number">0xffff</span>;;<br>*(--krnstack) = fs &amp; <span class="hljs-number">0xffff</span>;;<br>*(--krnstack) = gs &amp; <span class="hljs-number">0xffff</span>;;<br>*(--krnstack) = esi;<br>*(--krnstack) = edi;<br>*(--krnstack) = edx;<br></code></pre></td></tr></table></figure>
+
+<p> <code>first_return_from_kernel</code> 函数需要将 7 个寄存器弹出，最后执行 IRET 中断返回弹出 SS&#x2F;ESP&#x2F;EFLAGS&#x2F;CS&#x2F;EIP：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs assembly">first_return_from_kernel:<br>    popl %edx<br>    popl %edi<br>    popl %esi<br>    pop %gs<br>    pop %fs<br>    pop %es<br>    pop %ds<br>    iret<br></code></pre></td></tr></table></figure>
+
+<p>可见，基于 TSS 切换的进程创建中，子进程如果第一次被调度，那么子进程会直接执行用户态的代码（因为这时硬件会自动将保存在 TSS 段的用户态的 CS 和 EIP 弹出到相应寄存器中）；但在本节的方式中，子进程如果第一次被调度，那么它还是会先在内核中跑，将内核栈保存的用户态寄存器信息弹出后再回到用户态。</p>
+<h3 id="实验参考-3"><a href="#实验参考-3" class="headerlink" title="实验参考"></a>实验参考</h3><p>参考<a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/commit/fd8fa5f875051721ae7ccda3b403945c36fe891e">这个提交</a>。</p>
+<h3 id="实验报告-2"><a href="#实验报告-2" class="headerlink" title="实验报告"></a>实验报告</h3><p>回答下面几个问题。</p>
+<h4 id="问题-1"><a href="#问题-1" class="headerlink" title="问题 1"></a>问题 1</h4><p>针对下面的代码片段：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">movl tss,%ecx<br>addl $4096,%ebx<br>movl %ebx,ESP0(%ecx)<br></code></pre></td></tr></table></figure>
+
+<p>回答问题：</p>
+<ul>
+<li>为什么要加 4096？</li>
+</ul>
+<p>因为此时 <code>%ebx</code> 为下一个进程的 <code>task_struct</code> 指针。而内核栈栈顶初值需要设置为与该进程 <code>task_struct</code> 相同物理页的页顶。一页为 4KB，即 4096。</p>
+<ul>
+<li>为什么没有设置 <code>tss</code> 中的 SS0 ？</li>
+</ul>
+<p>这是因为所有进程的 SS0 均为 <code>0x10</code>，即内核数据段选择符。切换前后它保持不变，不用进行设置。</p>
+<h4 id="问题-2"><a href="#问题-2" class="headerlink" title="问题 2"></a>问题 2</h4><p>针对代码片段：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs assembly">*(--krnstack) = ebp;<br>*(--krnstack) = ecx;<br>*(--krnstack) = ebx;<br>*(--krnstack) = 0;<br></code></pre></td></tr></table></figure>
+
+<p>回答问题：</p>
+<ul>
+<li>子进程第一次执行时，<code>eax = ?</code> 为什么要等于这个数？哪里的工作让 <code>eax</code> 等于这样一个数？</li>
+</ul>
+<p>代码片段的最后一行使得，子进程第一次执行时，<code>eax</code> 为 0。这是因为在用户态的 <code>fork</code> API 需要靠返回值区分父进程和子进程。正常情况下父进程的 <code>fork</code> API 返回的是子进程的 PID，而子进程的 <code>fork</code> API 返回的为 0。</p>
+<ul>
+<li>这段代码中的 ebx 和 ecx 来自哪里，是什么含义，为什么要通过这些代码将其写到子进程的内核栈中？</li>
+</ul>
+<p>它们来自父进程的用户态的 <code>fork</code> API。在系统调用时，靠 <code>system_call</code> 将它们压入内核栈中。含义是 <code>system_call</code> 函数的入参。因为本实验是靠内核栈维护进程的硬件上下文，因为相关寄存器都要入栈。它们的顺序无法修改，需要和 <code>switch_to</code> 中 <code>pop</code> 的顺序一致。</p>
+<ul>
+<li>这段代码中的 <code>ebp</code> 来自哪里，是什么含义，为什么要做这样的设置？可以不设置吗？为什么？</li>
+</ul>
+<p><code>ebp</code> 也源于父进程的用户态 <code>fork</code> API。它是父进程用户态 fork 函数栈帧的栈基指针。不能不设置，因为 <code>switch_to</code> 中会将它 <code>pop</code> 出来，需要匹配。但是如果 <code>switch_to</code> 不使用 <code>ebp</code>，从而不 <code>popl %ebp</code>，那估计是可以的。</p>
+<h4 id="问题-3"><a href="#问题-3" class="headerlink" title="问题 3"></a>问题 3</h4><ul>
+<li>为什么要在切换完 LDT 之后要重新设置 <code>fs = 0x17</code>？而且为什么重设操作要出现在切换完 LDT 之后，出现在 LDT 之前又会怎么样？</li>
+</ul>
+<p>表面上看，切换前后的 <code>fs</code> 均为 <code>0x17</code>，重新设置 <code>fs = 0x17</code> 是多余的步骤。其实不然，这时因为段寄存器包含两个部分：显式部分和隐式部分。显示部分就是我们能控制，能赋值的 16 位的段选择符，而隐藏部分则拷贝了一份段描述符的信息。这是为了避免每次访问内存都要去查询 GDT 或者 LDT 表，加快程序执行时间。因此，如果在切换完 LDT 表后不重新设置 <code>fs</code>，那么由于隐藏部分的存在，CPU 还会直接从隐藏部分去读取段选择符的段基址，这是切换前的了。处理这种方法最简洁的方式是在对段描述符有任何改动之后就立刻重新加载这些段寄存器，CPU 会自动将从新的段描述符的信息加载到隐藏部分中。因此，如果重设操作出现在切换 LDT 之前，那么该重设将会毫无作用，下一个进程还是会用切换前的段描述符，造成程序异常。</p>
+<h2 id="实验五-信号量的实现和应用"><a href="#实验五-信号量的实现和应用" class="headerlink" title="实验五 信号量的实现和应用"></a>实验五 信号量的实现和应用</h2><h3 id="实验内容-4"><a href="#实验内容-4" class="headerlink" title="实验内容"></a>实验内容</h3><ul>
+<li>在 Ubuntu 下编写程序，用信号量解决生产者——消费者问题；</li>
+<li>在 Linux 0.11 中实现信号量，用生产者—消费者程序检验之。</li>
+</ul>
+<h3 id="原理分析-4"><a href="#原理分析-4" class="headerlink" title="原理分析"></a>原理分析</h3><p>多进程执行是无序的，为了使得各个进程<strong>同步（合理有序，走走停停）</strong>，需要信号量。例如：</p>
+<ul>
+<li>对于生产者，当没有空闲缓冲区时，不能继续往里面写数，需要停下来，直到有一个消费者从缓冲区取走一个数；</li>
+<li>对于消费者，当缓冲区为空时，不能从中取数，需要停下来，直到有一个生产者从缓冲区写入一个数。</li>
+</ul>
+<p>信号量包括整形数字（代表当前资源的个数），阻塞队列。以及对信号量的操作，包括创建，<strong>P 原子操作</strong>（消费资源），<strong>V 原子操作</strong>（生产资源）和删除。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">semaphore</span> &#123;</span><br>	<span class="hljs-type">char</span> name[SEM_NAME_LEN]; <span class="hljs-comment">// 信号量名</span><br>	<span class="hljs-type">int</span> value; <span class="hljs-comment">// 整形数字</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">task_struct</span> *<span class="hljs-title">queue</span>;</span> <span class="hljs-comment">// 阻塞队列</span><br>&#125; <span class="hljs-type">sem_t</span>;<br></code></pre></td></tr></table></figure>
+
+<p>为什么要有一个整形数字，而不能指简单的 0,1 开关？因为资源个数是多个，0 和 1 只能表明当前是否有资源，而无法代表当前的资源个数是多少。</p>
+<p>对信号量的操作关键是 P 原子操作 <code>sem_wait</code>和 V 原子操作 <code>sem_post</code>。</p>
+<h3 id="P-原子操作"><a href="#P-原子操作" class="headerlink" title="P 原子操作"></a>P 原子操作</h3><p>标准做法已在视频里给出：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">P(semaphore s) <br>&#123;<br>	s.value--;<br>	<span class="hljs-keyword">if</span>(s.value &lt; <span class="hljs-number">0</span>) &#123;<br>		sleep(s.<span class="hljs-built_in">queue</span>)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这种 <code>if</code> 方式容易理解，但是需要自己实现队列。许多网上的参考答案用的是下面这种：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">sys_sem_wait</span><span class="hljs-params">(semaphore *sem)</span><br>&#123;<br>	cli();<br>	<span class="hljs-keyword">while</span>( sem-&gt;value &lt;= <span class="hljs-number">0</span> )<br>		sleep_on(&amp;(sem-&gt;<span class="hljs-built_in">queue</span>))<br>	sem-&gt;value--; <span class="hljs-comment">// 和 while 的顺序不能交换！</span><br>	sti();<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>它和标准做法相比，主要有四个区别：</p>
+<ul>
+<li><p>增加了 <code>cli</code> 和 <code>sti</code> 。这是通过开关中断来确保对信号量的修改同时只有一个进程，形成<strong>临界区</strong>。对于单 CPU 适用，是比较简单的方法。但实际上，标准做法在 P 原子操作前后也需要临界区，只是这里将它们都放在了一个函数。</p>
+</li>
+<li><p><code>if</code> 换成了 <code>while</code> 。这是因为直接调用了 Linux 0.11 原生的 <code>sleep_on</code> （它可谓是 Linux 0.11 最难理解的函数之一），它通过<strong>内核栈</strong>形成了一个阻塞进程的<strong>隐式链表（栈）</strong>，所以这时我们不需要自己写一个阻塞队列了。这个隐式链表不是阻塞队列，而是阻塞栈。由此而来的副作用是必须将 <code>if</code> 换成 <code>while</code> ，因为根据 <code>sleep_on</code> 的实现，一旦唤醒了阻塞队列的头部进程，那么当它被调度时，会<strong>自动地</strong>唤醒下一个进程，从而最终堵塞队列的全部进程都会被唤醒。因此需要用 <code>while</code>，防止生产者只生产了一个资源而唤醒了所有等待的消费者。</p>
+</li>
+<li><p>整形数字的顺序放在了下面。如果是下面的实现</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">sys_sem_wait</span><span class="hljs-params">(semaphore *sem)</span><br>&#123;<br>	cli();<br>    sem-&gt;value--;<br>	<span class="hljs-keyword">while</span>( sem-&gt;value &lt; <span class="hljs-number">0</span> )<br>		sleep_on(&amp;(sem-&gt;<span class="hljs-built_in">queue</span>))<br>	sti();<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>会有问题。考虑先来了两个消费者，信号量变成 -2。此时来了一个生产者使得信号量加一，信号量变成 -1。生产了一个资源本应该唤醒一个消费者进程，但按照这种实现，两个消费者都没有被唤醒，矛盾。</p>
+</li>
+<li><p>小于号变成了小于等于号。这是因为整形数字顺序的不同。</p>
+</li>
+<li><p>注意 <code>while</code> 方式会使得信号量始终大于等于零，而 <code>if</code> 方式的信号量可正可负。</p>
+</li>
+</ul>
+<h3 id="V-原子操作"><a href="#V-原子操作" class="headerlink" title="V 原子操作"></a>V 原子操作</h3><p>标准做法已在视频里给出：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">V(semaphore s) <br>&#123;<br>	s.value++;<br>	<span class="hljs-keyword">if</span>(s.value &lt;= <span class="hljs-number">0</span>) &#123;<br>		sleep(s.<span class="hljs-built_in">queue</span>)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>而参考答案为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">sys_sem_post</span><span class="hljs-params">(<span class="hljs-type">sem_t</span> *sem)</span><br>&#123;<br>    cli();<br>    sem-&gt;value++;<br>    <span class="hljs-keyword">if</span> ((sem-&gt;value) &lt;= <span class="hljs-number">1</span>) <span class="hljs-comment">// 应该也可以用等号</span><br>        wake_up(&amp;(sem-&gt;<span class="hljs-built_in">queue</span>));<br>    sti();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>主要的区别是小于等于号后边从 0 变成了 1。这是因为 <code>while</code> 方式的信号量始终大于等于零。如果加一后小于等于一，那么加一前为零，有可能是有消费者在等待中的。<code>wake_up</code> 也做了处理，如果阻塞队列中没有进程，直接退出。</p>
+<h3 id="用户态程序"><a href="#用户态程序" class="headerlink" title="用户态程序"></a>用户态程序</h3><p>要求用文件建立共享缓冲区，生产者往文件中写数，消费者从文件中取数。用户态程序的难点在于，消费者每读取一个数，需要将它从文件中删除，而 C 语言文件操作函数没有一个能直接删除数字。为此，当消费者进程读数时，首先调用 <code>lseek</code> 得到目前文件指针的位置 A，读出全部 10 个数字，第一个数是要取出送到标准输出的，再将后面 9 个数字写到文件中，最后再调用 <code>lseek</code> 将文件指针移动到位置 A 减一个数的位置，从而实现了删除一个数字。如果文件里实际保存的数字不足 10 个是否会有问题呢？不会，因为这相当于扩展了文件，而扩展的数字不会影响前面的。</p>
+<p>理解<code>lseek</code> ：每个打开的文件都有一个“当前文件偏移量”，是一个非负整数，用以度量从文件开始处计算的字节数。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs markdown">函数原型：<br>off<span class="hljs-emphasis">_t lseek(int fd, off_</span>t offset, int whence); // 打开一个文件的下一次读写的开始位置<br>参数：<br><span class="hljs-bullet">-</span> fd 表示要操作的文件描述符<br><span class="hljs-bullet">-</span> offset 是相对于 whence（基准）的偏移量<br><span class="hljs-bullet">-</span> whence 可以是 SEEK<span class="hljs-emphasis">_SET（文件头），SEEK_</span>CUR（当前文件指针位置） ，SEEK<span class="hljs-emphasis">_END 文件尾</span><br><span class="hljs-emphasis">返回值：</span><br><span class="hljs-emphasis">- 文件读写指针距文件开头的字节大小，出错，返回-1</span><br></code></pre></td></tr></table></figure>
+
+<p>因此用户态程序的消费者进程代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs c">sem_wait(p_full_buf);<br>sem_wait(p_mutex);<br><span class="hljs-keyword">if</span>( (pos=lseek(fd,<span class="hljs-number">0</span>,SEEK_CUR)) == <span class="hljs-number">-1</span>)&#123; <span class="hljs-comment">// 保存当前文件指针位置 A</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;seek pos error\n&quot;</span>);<br>&#125;<br><span class="hljs-keyword">if</span>( (num = lseek(fd,<span class="hljs-number">0</span>,SEEK_SET)) == <span class="hljs-number">-1</span>)&#123; <span class="hljs-comment">// 文件指针置零（文件开头）</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;lseek error\n&quot;</span>);<br>&#125;<br><span class="hljs-keyword">if</span>( (num=read(fd,data,<span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>)*<span class="hljs-number">10</span>)) == <span class="hljs-number">-1</span>)&#123; <span class="hljs-comment">// 读出 10 个数字</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;read error\n&quot;</span>);<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;consumer 1, pid: %d, buffer index: %d, data: %d\n&quot;</span>, consumer1, pos / <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>) - <span class="hljs-number">1</span>, data[<span class="hljs-number">0</span>]); <span class="hljs-comment">/* 减一是因为 pos 指向的是下一个资源的位置*/</span><br>&#125;<br>fflush(<span class="hljs-built_in">stdout</span>); <span class="hljs-comment">// 将输出缓冲区的信息送到终端，防止多进程终端输出混乱</span><br><span class="hljs-keyword">if</span>( (num = lseek(fd,<span class="hljs-number">0</span>,SEEK_SET))== <span class="hljs-number">-1</span>)&#123; <span class="hljs-comment">// 文件指针置零（文件开头）</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;lseek error\n&quot;</span>);<br>&#125;<br><span class="hljs-keyword">if</span>( (num = write(fd,&amp;data[<span class="hljs-number">1</span>],<span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>)*<span class="hljs-number">9</span>)) == <span class="hljs-number">-1</span>)&#123; <span class="hljs-comment">// 写入 9 个数字</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;read and write error\n&quot;</span>);<br>&#125;<br><span class="hljs-keyword">if</span>( (num = lseek(fd,pos-<span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>),SEEK_SET))== <span class="hljs-number">-1</span>)&#123; <span class="hljs-comment">// 将文件指针移动到位置 A 减一个数的位置</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;lseek error\n&quot;</span>);<br>&#125;<br>sem_post(p_mutex);<br>sem_post(p_empty_buf);<br></code></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>信号量的原理是容易理解的，但本实验的代码实现却不简单。难点有两个：</p>
+<ul>
+<li>没有自己实现阻塞队列，而套用了 Linux 0.11 最难理解的原生函数之一 <code>sleep_on</code> 。由此需要将 <code>if</code> 方式改为 <code>while</code> 方式以及其他一系列改动。</li>
+<li>用户态程序的文件操作利用 <code>lseek</code> 完成删除第一个数字。</li>
+</ul>
+<h3 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h3><p>本实验需要将用户程序 <code>pc.c</code> 从开发环境 Ubuntu 拷贝到 Linux 0.11 的硬盘中。<code>hdc-0.11.img</code>是 0.11 内核启动后的根文件系统镜像文件，相当于硬盘。因此，如果需要做文件交换，那么需要先将 <code>hdc-0.11.img</code> 挂载带 Ubuntu 下。所谓挂载（mount），就是操作系统的文件系统能够访问存储器的过程，或者说将外存储器的文件系统绑定到了操作系统的<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzk0MjE3NDE0Ng==&mid=2247494176&idx=1&sn=b4680b50090bb3c7b9c49379241c536c&chksm=c2c5908df5b2199b361885b32b07ab0f597ab25cd1d70bb75ca13fb897c200285685318f145f&scene=21#wechat_redirect">文件系统</a>的过程。在这个过程中，操作系统会将硬盘中的数据以文件系统的格式解读，并将其加载到内存对应的数据结构中。这样操作系统才能通过内存的数据，以文件系统的方式访问硬盘中以二进制形式存放的的文件。而 <code>unmout</code> 则是相反的卸载过程。注意在进行 Linux 0.11 和开发环境的文件交换时，需要先在 Linux 0.11 执行 <code>exit</code> 并关闭 x86 模拟器 Bochs （点击其右上角的关闭电源按钮）后， Linux 0.11 生成的文件才会保存起来从而能被开发环境访问。</p>
+<h3 id="实验参考-4"><a href="#实验参考-4" class="headerlink" title="实验参考"></a>实验参考</h3><p><a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/commit/4a6a351f933e6e969843ff34b19af0c7993ef783">参考这个提交</a>。在 <a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/commit/4a6a351f933e6e969843ff34b19af0c7993ef783#diff-d7e60b33c666e6c4849584b9c36ca85791b55bca10162b75a1d6aa02e8dfdd9e">log.txt</a> 中，<code>producer</code> 在缓冲区 <code>buffer</code> 满了之后停止生产，<code>consumer</code> 在缓冲区空的时候停止消费，各进程做到了合作有序，实现同步。为什么总是生产&#x2F;消费完 10 个资源才转移到其他线程，估计每个进程的时间片时间远大于生产&#x2F;消费的 10 个资源的时间。注意及时使用 <code>fflush</code>，因为 <code>printf</code> 只是将信息保存到输出缓冲区，在多个进程同时输出时，它也是一个临界资源（每次仅允许一个进程访问的资源）。</p>
+<h2 id="实验六-地址映射与共享"><a href="#实验六-地址映射与共享" class="headerlink" title="实验六 地址映射与共享"></a>实验六 地址映射与共享</h2><h3 id="实验内容-5"><a href="#实验内容-5" class="headerlink" title="实验内容"></a>实验内容</h3><ul>
+<li><p>用 Bochs 调试工具跟踪 Linux 0.11 的地址翻译（地址映射）过程，了解 IA-32 和 Linux 0.11 的内存管理机制</p>
+</li>
+<li><p>在信号量实验的基础上，为 Linux 0.11 增加共享内存功能，并将生产者—消费者程序移植到 Linux 0.11</p>
+</li>
+</ul>
+<p>具体要求在 <code>mm/shm.c</code> 中实现 <code>shmget()</code> 和 <code>shmat()</code> 两个系统调用。它们能支持 <code>producer.c</code> 和 <code>consumer.c</code> 的运行即可，不需要完整地实现 POSIX 所规定的功能。</p>
+<p><code>shmget</code> （share memory get）功能为：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs arduino">函数原型：<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">shmget</span><span class="hljs-params">(<span class="hljs-type">key_t</span> key, <span class="hljs-type">size_t</span> size, <span class="hljs-type">int</span> shmflg)</span></span>;<br><span class="hljs-built_in">shmget</span>() 会新建/打开一页内存，并返回该页共享内存的 shmid（该块共享内存在操作系统内部的 id）。<br>所有使用同一块共享内存的进程都要使用相同的 key 参数。如果 key 所对应的共享内存已经建立，则直接返回 shmid。<br>如果 size 超过一页内存的大小，返回 <span class="hljs-number">-1</span>，并置 errno 为 EINVAL。如果系统无空闲内存，返回 <span class="hljs-number">-1</span>，并置 errno 为 ENOMEM。<br>shmflg 参数可忽略。<br></code></pre></td></tr></table></figure>
+
+<p><code>shmat</code> （share memory attach）功能为：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">函数原型：void *<span class="hljs-keyword">shmat(int </span><span class="hljs-keyword">shmid, </span>const void *<span class="hljs-keyword">shmaddr, </span>int <span class="hljs-keyword">shmflg);</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">shmat() </span>会将 <span class="hljs-keyword">shmid </span>指定的共享页面映射到当前进程的虚拟地址空间中，并将其首地址返回。<br>如果 <span class="hljs-keyword">shmid </span>非法，返回 -<span class="hljs-number">1</span>，并置 errno 为 <span class="hljs-keyword">EINVAL。</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">shmaddr </span>和 <span class="hljs-keyword">shmflg </span>参数可忽略。<br></code></pre></td></tr></table></figure>
+
+<h3 id="原理分析-5"><a href="#原理分析-5" class="headerlink" title="原理分析"></a>原理分析</h3><h4 id="第一部分"><a href="#第一部分" class="headerlink" title="第一部分"></a>第一部分</h4><p>实验的第一部分是跟踪一个应用程序的全局变量 <code>i</code> 的地址映射（分段、分页）过程，一步步跟踪最终找到它的物理地址。</p>
+<h5 id="分段"><a href="#分段" class="headerlink" title="分段"></a>分段</h5><p>首先是要得到全局变量的线性地址。在汇编中以 <code>ds:[eax]</code> 表示，后者是偏移量（即应用程序中 <code>&amp;i</code> 的值），ds 是数据段选择子。它的段基址在哪里呢？在进程的 LDT 中。应用程序的 LDT 又在哪里呢？在 GDT 中。GDTR 寄存器存放 GDT 的物理地址，LDTR 寄存器存放当前进程的 LDT 的段选择子。注意 GDT 只是内存中的一个数据结构，而 LDT 是（专门存放段描述符的）一个段。从而找到了当前进程的 LDT 段基址，再由 ds 找到 LDT 中的数据段描述符，最终得到数据段段基址。数据段段基址加上偏移量等于线性地址。</p>
+<p>分段是 CPU 硬件层面提供的机制，但现代 32 位操作系统（无论是 Windows 还是 Linux）都会将段基址置为零，段限长为全空间 4GB （平坦模式）。64 位 CPU 甚至直接将段基址置为零（清晰地区分哪些是 CPU 引入的，哪些是操作系统引入的很重要）。因此可以说现代操作系统实际上没有使用分段机制，只有分页。为什么还要保留分段，可能是为了前向兼容：段的概念是起源于 8086，它是 16 位处理器，但是地址总线是 20 位。16 的位的寄存器如何能访问 20 位的地址？段基地址左移 4 位（就是乘16）再加上段内偏移就是 20 位的地址（这也是 Linux 0.11 刚启动时进入的实模式）。</p>
+<h5 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h5><p>Linux 0.11 的线性地址有 32 位，前 10 位是页目录表偏移，中间 10 位是页表偏移，最后 12 位是页内偏移。寄存器 CR3 存放页目录表物理基址（全为零），然后根据页目录表偏移查询页目录表，得到页目录表项。页目录表项是一个 32 位的结构体，前 20 位是物理页框号，是页表的物理基址。再根据页表偏移查询页表，得到页表项。页表项和页目录项的结构相同，其前 20 位也是物理页框号，是页的物理基址（页基址）。最后将页基址和页内偏移相加得到最终的物理地址。</p>
+<p>分页也是CPU 硬件层面提供的机制。其作用是<strong>提高内存利用率</strong>，<strong>缓解内存碎片问题</strong>，同时提供<strong>保护</strong>。通过分页，操作系统可以不将进程对应的可执行文件全部加载到内存中，而是一页一页地加载进来。</p>
+<h4 id="第二部分"><a href="#第二部分" class="headerlink" title="第二部分"></a>第二部分</h4><p>实验的第二部分是 Linux0.11 增加共享内存功能，并将生产者—消费者程序检验之。</p>
+<p>共享内存的数据结构为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">shm_ds</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> key; <span class="hljs-comment">// 共享内存 id</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> size; <span class="hljs-comment">// 共享内存的大小，但实验要求超过一页报错，所以没有实际作用</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> page; <span class="hljs-comment">// 共享内存的物理基地址</span><br>&#125;shm_ds;<br></code></pre></td></tr></table></figure>
+
+<p><code>sys_shmget</code> 的逻辑很简单。如果 <code>key</code> 存在，返回共享内存的结构体，如果不存在，调用 <code>get_free_page</code> 得到一页物理内存并插入结构体数组 <code>shm_list</code> 中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">sys_shmget</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> key, <span class="hljs-type">size_t</span> size)</span><br>&#123;<br>    <span class="hljs-type">int</span> i;<br>    <span class="hljs-type">void</span> *page;<br>    <span class="hljs-keyword">if</span> (size &gt; PAGE_SIZE || key == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">return</span> -EINVAL;<br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; SHM_SIZE; i++) <span class="hljs-comment">/* 如果 key 存在，直接返回共享内存的 id */</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (shm_list[i].key == key)<br>        &#123;<br>            printk(<span class="hljs-string">&quot;Find previous shm key:%u\n&quot;</span>, shm_list[i].key);<br>            <span class="hljs-keyword">return</span> i;<br>        &#125;<br>    &#125;<br>    page = get_free_page(); <span class="hljs-comment">/* get_free_page 中会将 mem_map 相应位置置为 1 */</span><br>    <span class="hljs-comment">/* 需要将 mem_map 相应位置清零，因为在 sys_shmat 才会将申请的物理页和虚拟地址关联增加引用次数 */</span><br>    decrease_mem_map(page);<br><br>    <span class="hljs-keyword">if</span> (!page)<br>        <span class="hljs-keyword">return</span> -ENOMEM;<br>    printk(<span class="hljs-string">&quot;Shmget get memory&#x27;s address is 0x%08x\n&quot;</span>, page);<br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; SHM_SIZE; i++) <span class="hljs-comment">/* 找到空闲的共享内存 */</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (shm_list[i].key == <span class="hljs-number">0</span>)<br>        &#123;<br>            shm_list[i].page = page;<br>            shm_list[i].key = key;<br>            shm_list[i].size = size;<br>            printk(<span class="hljs-string">&quot;Generate a new shm key:%u\n&quot;</span>, shm_list[i].key);<br>            <span class="hljs-keyword">return</span> i;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>注意，<code>decrease_mem_map</code> 是自定义的函数，它和 <code>sys_shmat</code> 中的 <code>increase_mem_map</code> 配套使用，函数定义在 <a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/blob/fb29004fd027fddcef16353bfdb086a20f253c47/mm/memory.c#L228"><code>memory.c</code></a> 中：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">increase_mem_map</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> page)</span><br>&#123;<br>	page -= LOW_MEM;<br>	page &gt;&gt;= <span class="hljs-number">12</span>;<br>	mem_map[page]++;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">decrease_mem_map</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> page)</span><br>&#123;<br>	page -= LOW_MEM;<br>	page &gt;&gt;= <span class="hljs-number">12</span>;<br>	mem_map[page]--;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果不加它们（网上许多参考答案都没有加），那么一个物理页面被两个进程共享，它在两个进程退出时都会被释放一次，而 <code>mem_map[page]</code> 值为 1。因此操作系统会在第二次释放的 <code>free_page</code> 中 <a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/blob/Experiment6_address_mapping_and_sharing/mm/memory.c#L98"><code>panic</code></a> 死机。</p>
+<p><code>sys_shmat</code> 建立当前进程的虚拟空间和共享页面的映射。</p>
+<p><code>current-&gt;start_code</code> 在 fork 进程（执行一个可执行文件是先 <code>fork</code> 再 <code>execve</code> ）时初始化为进程号乘以 64MB。<code>current-&gt;brk</code> 在 <code>do_execve</code> 中初始化为可执行文件的 Bss 段（存放未初始化的全局变量）加 Data（存放已初始化的全局变量） 加 Text 段的大小。由于我们用的消费者和生产者程序没有使用全局变量，故进程中 Bss 段大小为零；又《完全注释》关于 <code>exec.c</code> 注释中写明由于使用的是 ZMAGIC 格式的可执行文件，其数据段和代码段都是页对齐的，所以 <code>current-&gt;brk + current-&gt;start_code</code> 也是页对齐的，无需向上取整。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> *<span class="hljs-title function_">sys_shmat</span><span class="hljs-params">(<span class="hljs-type">int</span> shmid)</span><br>&#123;<br>    <span class="hljs-keyword">if</span> (shmid &lt; <span class="hljs-number">0</span> || SHM_SIZE &lt;= shmid || shm_list[shmid].page == <span class="hljs-number">0</span> || shm_list[shmid].key == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">return</span> (<span class="hljs-type">void</span> *)-EINVAL;<br>    <span class="hljs-comment">/* 建立物理地址和线性地址的映射（前 20 位）*/</span><br>    <span class="hljs-comment">/* current-&gt;brk 和 current-&gt;start_code 都是 4KB 对齐的 */</span><br>    printk(<span class="hljs-string">&quot;current-&gt;brk: 0x%08x, current-&gt;start_code: 0x%08x\n&quot;</span>, current-&gt;brk, current-&gt;start_code);<br>    put_page(shm_list[shmid].page, current-&gt;brk + current-&gt;start_code);<br><br>    <span class="hljs-comment">/* 需要增加一次共享物理页的引用次数，否则会在 free_page 中 panic 死机 */</span><br>    increase_mem_map(shm_list[shmid].page);<br>    current-&gt;brk += PAGE_SIZE;<br>    <span class="hljs-keyword">return</span> (<span class="hljs-type">void</span> *)(current-&gt;brk - PAGE_SIZE);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="实验参考-5"><a href="#实验参考-5" class="headerlink" title="实验参考"></a>实验参考</h3><p>参考<a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/commit/f2bc091c75504d7b736fdc78177e13d150a66ef6">这个提交</a>。除了信号量和共享内存，还增加了一个系统调用 <a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/commit/fb29004fd027fddcef16353bfdb086a20f253c47#diff-f0650daa46b3094cc95addf8c615b82435874446cde5d6992a777e66a1e86667"><code>get_jiffies</code></a> 获取系统已走过的时钟中断数来判断信号量是否工作正常。从 <a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/commit/f2bc091c75504d7b736fdc78177e13d150a66ef6#diff-3d94a1bf04c5a7891471bc11e98c55e805f349d1157f1f74ed44fa40cf8a7a41"><code>producer.log</code></a>  和 <a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/commit/f2bc091c75504d7b736fdc78177e13d150a66ef6#diff-403c58c34bb897c68559d697a052245a4fb794f7bbb8f71714755709062b750e"><code>consumer.log</code></a> 可以看出，生产者进程和消费者进程实现了同步。</p>
+<h2 id="实验七-终端设备的控制"><a href="#实验七-终端设备的控制" class="headerlink" title="实验七 终端设备的控制"></a>实验七 终端设备的控制</h2><h3 id="实验内容-6"><a href="#实验内容-6" class="headerlink" title="实验内容"></a>实验内容</h3><p>本实验的基本内容是修改 Linux 0.11 的终端设备处理代码，对键盘输入和字符显示进行非常规的控制。</p>
+<p>在初始状态，一切如常。用户按一次 F12 后，把应用程序向终端输出所有字母都替换为 <code>*</code>。用户再按一次 F12，又恢复正常。第三次按 F12，再进行输出替换。依此类推。以 <code>ls</code> 命令为例，正常情况：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-built_in">ls</span></span><br>hello.c hello.o hello<br></code></pre></td></tr></table></figure>
+
+<p>第一次按 F12，然后输入 ls：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">**</span><br>*****.* *****.* *****<br></code></pre></td></tr></table></figure>
+
+<p>第二次按 F12，然后输入 ls：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-built_in">ls</span></span><br>hello.c hello.o hello<br></code></pre></td></tr></table></figure>
+
+<h3 id="原理分析-6"><a href="#原理分析-6" class="headerlink" title="原理分析"></a>原理分析</h3><p>Linux 0.11 外设有两类：块设备和字符设备。块设备将信息存储在大小（Linux 0.11 为 1KB）固定的块中，能被随机访问，比如硬盘；字符设备则按照字符流的方式被顺序访问，例如鼠标、键盘、显示器、串口。如李治军老师所说，理解外设管理，要理解三部分：</p>
+<ul>
+<li>最终触发外设读写的是通过 <code>out</code> 往外设控制器的端口（x86 为独立编址）发送指令；</li>
+<li>理解其中的中断过程；</li>
+<li>理解如何利用了缓冲区和等待队列。</li>
+</ul>
+<h4 id="进程读取磁盘过程"><a href="#进程读取磁盘过程" class="headerlink" title="进程读取磁盘过程"></a>进程读取磁盘过程</h4><h5 id="定位文件的磁盘数据块位置"><a href="#定位文件的磁盘数据块位置" class="headerlink" title="定位文件的磁盘数据块位置"></a>定位文件的磁盘数据块位置</h5><p>读取文件前需要先 <code>sys_open</code> ，它一方面将 <code>task_struct</code> 中的 <code>flip[NR_OPEN]</code> 和 <code>file_table[NR_FILE]</code> 绑定，另一方面将 <code>file_table[NR_FILE]</code> 和 <code>inode_table[NR_INODE]</code> 绑定，从而通过文件路径名，能找到相应的 inode 节点（存放文件的元信息，比如文件大小，创建时间以及所在块号），数据结构如下下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 代码路径：inculde/linux/fs.h</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> NR_OPEN 20</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> NR_INODE 32</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> NR_FILE 64</span><br>...<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">file</span> &#123;</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> f_mode; <span class="hljs-comment">// 文件操作模式</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> f_flags; <span class="hljs-comment">// 文件打开，控制标志</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> f_count; <span class="hljs-comment">// 文件句柄数</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">m_inode</span> * <span class="hljs-title">f_inode</span>;</span> <span class="hljs-comment">// 指向文件对应的 inode 节点</span><br>	<span class="hljs-type">off_t</span> f_pos; <span class="hljs-comment">// 当前文件读写位置指针</span><br>&#125;;<br><br><span class="hljs-comment">// 代码路径：inculde/linux/sched.h</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">task_struct</span> &#123;</span><br>	...<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">file</span> * <span class="hljs-title">filp</span>[<span class="hljs-title">NR_OPEN</span>];</span><br>	...<br>&#125;;<br><br><span class="hljs-comment">// 代码路径：fs/file_table.c</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">file</span> <span class="hljs-title">file_table</span>[<span class="hljs-title">NR_FILE</span>];</span><br><br><span class="hljs-comment">// 代码路径：inculde/linux/fs.h</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">m_inode</span> &#123;</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> i_mode; <span class="hljs-comment">// 各种标记位，读写执行等，我们 ls 时看到的</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> i_uid; <span class="hljs-comment">// 文件的用户 id</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> i_size; <span class="hljs-comment">// 文件大小</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> i_mtime;<br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> i_gid; <span class="hljs-comment">// 文件的用户组 id</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> i_nlinks; <span class="hljs-comment">// 文件入度，即有多少个目录指向它</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> i_zone[<span class="hljs-number">9</span>];  <span class="hljs-comment">// 文件内容对应的硬盘数据块号</span><br><span class="hljs-comment">/* these are in memory also */</span> <span class="hljs-comment">// 在内存中使用的字段</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">task_struct</span> * <span class="hljs-title">i_wait</span>;</span> <span class="hljs-comment">// 等待该 inode 节点的进程队列</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> i_atime; <span class="hljs-comment">// 文件被访问就会修改这个字段</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> i_ctime; <span class="hljs-comment">// 修改文件内容和属性就会修改这个字段</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> i_dev; <span class="hljs-comment">// inode所属的设备号</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> i_num; <span class="hljs-comment">// inode 的编号，或者说 inode 指针</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> i_count; <span class="hljs-comment">// 多少个进程在使用这个 inode</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> i_lock; <span class="hljs-comment">// 互斥锁（用于多进程访问磁盘）</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> i_dirt; <span class="hljs-comment">// inode 内容是否被修改过</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> i_pipe; <span class="hljs-comment">// 是不是管道文件</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> i_mount; <span class="hljs-comment">// 该节点是否挂载了另外的文件系统</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> i_seek;<br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> i_update;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>文件描述符 <code>fd</code> 是在 <code>flip[NR_OPEN]</code> 数组中的偏移量，由于建立了上述的两级映射关系，有了文件描述符就能找到相应文件的硬盘数据块的位置。</p>
+<h5 id="将硬盘数据块读入内核缓冲区数据块"><a href="#将硬盘数据块读入内核缓冲区数据块" class="headerlink" title="将硬盘数据块读入内核缓冲区数据块"></a>将硬盘数据块读入内核缓冲区数据块</h5><p>内核缓冲区的作用是提高文件操作的效率。可能会有人有疑问，没有缓冲区，是从进程用户态空间直接到磁盘，有了缓冲区则是先从进程用户态空间到内核缓冲区，然后再是磁盘，明明增加了一次拷贝为什么会更快？因为访问内存速度比访问硬盘快两个数量级，进程 A 在某个时刻执行一段程序，过段时间后可能还是相同数据块的程序（程序的空间局部性）；又或者是进程 B 也要执行相同程序，这都能利用缓冲区，而不是花上百倍时间从硬盘读取。缓冲块和硬盘数据块是一一对应关系，Linux 0.11 中大小都为 1KB。</p>
+<p>表面上只调用了 <code>bread</code>（block read） ，但其中发生了许多事情：</p>
+<ul>
+<li>在内核缓冲区找相应设备号，硬盘数据块号的缓冲块，如果有现成已和硬盘数据块同步的，则直接返回（不用执行后面步骤），否则申请一块缓冲块；</li>
+<li>将申请的缓冲块加锁，保护这个数据块在解锁前不会被其他进程操作；</li>
+<li>为申请的缓冲块构造请求项（存放要操作的磁头、扇区、柱面等），如果请求项队列为空，那么将请求项置为当前请求项 <code>dev-&gt;current_request</code> ，并调用请求项处理函数 <code>do_hd_request</code> 来处理它。如果请求项队列不空，则将它按照电梯算法（磁头移动距离最小）插入到请求项队列中；</li>
+<li><code>outb_p</code> 往磁盘控制器的端口发送指令，并设置中断服务程序，然后返回 <code>bread</code> 中将该进程睡眠（通过内核栈形成链式结构）；</li>
+<li>过了很久，硬盘控制器将一个扇区的数据从硬盘读入到硬盘控制器的缓冲区（注意它区别于内核缓冲区，它依然属于外设）后，触发硬盘中断，进入中断服务程序；</li>
+<li>硬盘中断服务程序将磁盘控制器缓冲区的数据块拷贝到内核缓冲块，然后判断数据是否读完，如果否则退出；如果是则唤醒睡眠的进程（由于是内核栈，所以后睡眠的先被唤醒），并调用 <code>do_hd_request</code> 处理下一个请求项（如果请求项队列为空则直接返回），这样就实现了处理请求项队列里的循环操作。</li>
+</ul>
+<h5 id="将内核缓冲区数据块拷贝到进程用户态空间"><a href="#将内核缓冲区数据块拷贝到进程用户态空间" class="headerlink" title="将内核缓冲区数据块拷贝到进程用户态空间"></a>将内核缓冲区数据块拷贝到进程用户态空间</h5><p>这部分很简单，通过 <code>put_fs_byte</code> 一个字节一个字节的完成拷贝。</p>
+<h4 id="键盘中断处理过程"><a href="#键盘中断处理过程" class="headerlink" title="键盘中断处理过程"></a>键盘中断处理过程</h4><p>每个终端设备都对应一个 <code>tty_struct</code> 数据结构：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> TTY_BUF_SIZE 1024</span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tty_struct</span> &#123;</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">termios</span> <span class="hljs-title">termios</span>;</span><br>	<span class="hljs-type">int</span> pgrp;<br>	<span class="hljs-type">int</span> stopped;<br>	<span class="hljs-type">void</span> (*write)(<span class="hljs-keyword">struct</span> tty_struct * tty); <span class="hljs-comment">/* tty 写函数指针 */</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tty_queue</span> <span class="hljs-title">read_q</span>;</span> <span class="hljs-comment">/* tty 读队列 */</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tty_queue</span> <span class="hljs-title">write_q</span>;</span> <span class="hljs-comment">/* tty 写队列 */</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tty_queue</span> <span class="hljs-title">secondary</span>;</span> <span class="hljs-comment">/* tty 辅助队列 */</span><br>	&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tty_queue</span> &#123;</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> data; <span class="hljs-comment">// tty 队列缓冲区当前数据的字符行数</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> head; <span class="hljs-comment">// 缓冲区中数据头指针</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> tail; <span class="hljs-comment">// 缓冲区中数据尾指针</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">task_struct</span> * <span class="hljs-title">proc_list</span>;</span> <span class="hljs-comment">// 等待本缓冲区的进程列表</span><br>	<span class="hljs-type">char</span> buf[TTY_BUF_SIZE]; <span class="hljs-comment">// 缓冲区数据</span><br>&#125;;<br><br></code></pre></td></tr></table></figure>
+
+<p>tty 是 teletype terminal 的缩写，代指终端设备（字符设备）。<code>read_q</code> 用来临时存放从键盘或串行终端输入的原始（Raw）字符序列，<code>write_q</code> 用来存放写到控制台显示屏或串行终端的字符序列，辅助队列 <code>secondary</code> 用来存放从 <code>read_q</code> 中取出的经过行规则模式程序处理过后的数据，称为熟（cooked）模式数据。这是在行规则程序将原始数据中的特殊字符如删除字符变换后的规范输入数据。<code>secondary</code> 队列的字符会被上层终端函数 <code>tty_read</code> 读取。</p>
+<p>当用户在键盘键入了一个字符时，会引起键盘中断响应，中断处理汇编程序会从键盘控制器的端口读取（<code>inb</code>）键盘扫描码，然后将其译成相应字符，放入 <code>read_q</code> 中，然后调用 C 函数 <code>do_tty_interrupt</code>，它有直接调用行规则函数 <code>copy_to_cooked</code> 对该字符过滤处理，放入辅助队列中，同时放入写队列 <code>write_q</code>，并调用写控制台函数 <code>con_write</code>，即回显。<code>con_write</code> 中通过 out 将队列的字符写入显示器的端口中。</p>
+<p>放入辅助队列之后呢？之后就是唤醒在辅助队列等待的进程，然后该进程会将字符拷贝到自己的用户空间。实际上，键盘中断的最开始并不是用户在键盘键入字符，而是某个进程运行 <code>scanf</code> 后通过 <code>sleep_if_empty</code> 阻塞自己，然后用户键入字符后才会被唤醒。从进程 <code>scanf</code> 的流程为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// ------------ 进程文件视图 ------------</span><br><span class="hljs-comment">// 1. scanf 最终会调用 sys_read(0, buf, count)，0 是标准输入的文件描述符。这是因为在 main 中，1 号进程打开的第一个文件是 /dev/tty0 设备文件。而其他的用户进程都是 1 fork 出来的，因为她们的 0 号描述符也都对应 /dev/tty0。/dev/tty0 的 inode 是在制造磁盘时弄好的。</span><br><br><span class="hljs-comment">// 2. sys_read</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">sys_read</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> fd,<span class="hljs-type">char</span> * buf,<span class="hljs-type">int</span> count)</span><br>&#123;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">file</span> * <span class="hljs-title">file</span>;</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">m_inode</span> * <span class="hljs-title">inode</span>;</span><br>    file=current-&gt;filp[fd]；<br>	inode = file-&gt;f_inode;<br>	<span class="hljs-keyword">if</span> (S_ISCHR(inode-&gt;i_mode)) <span class="hljs-comment">// 会走到这个分支</span><br>		<span class="hljs-keyword">return</span> rw_char(READ, inode-&gt;i_zone[<span class="hljs-number">0</span>], buf, count, &amp;file-&gt;f_pos); <span class="hljs-comment">// inode-&gt;i_zone[0] 存放设备号</span><br>&#125;<br><br><span class="hljs-comment">// 3. rw_char</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-title function_">int</span> <span class="hljs-params">(*crw_ptr)</span><span class="hljs-params">(<span class="hljs-type">int</span> rw,<span class="hljs-type">unsigned</span> minor,<span class="hljs-type">char</span> * buf,<span class="hljs-type">int</span> count,<span class="hljs-type">off_t</span> * pos)</span>;<br><span class="hljs-type">static</span> crw_ptr crw_table[]=&#123;<br>	<span class="hljs-literal">NULL</span>,		<span class="hljs-comment">/* nodev */</span><br>	rw_memory,	<span class="hljs-comment">/* /dev/mem etc */</span><br>	<span class="hljs-literal">NULL</span>,		<span class="hljs-comment">/* /dev/fd */</span><br>	<span class="hljs-literal">NULL</span>,		<span class="hljs-comment">/* /dev/hd */</span><br>	rw_ttyx,	<span class="hljs-comment">/* /dev/ttyx */</span> <span class="hljs-comment">// 串行终端，指通过系统串口接入的终端</span><br>	rw_tty,		<span class="hljs-comment">/* /dev/tty */</span> <span class="hljs-comment">// 控制（台）终端，即显示器和键盘</span><br>	<span class="hljs-literal">NULL</span>,		<span class="hljs-comment">/* /dev/lp */</span><br>	<span class="hljs-literal">NULL</span>&#125;;		<span class="hljs-comment">/* unnamed pipes */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">rw_char</span><span class="hljs-params">(<span class="hljs-type">int</span> rw,<span class="hljs-type">int</span> dev, <span class="hljs-type">char</span> * buf, <span class="hljs-type">int</span> count, <span class="hljs-type">off_t</span> * pos)</span><br>&#123;<br>	crw_ptr call_addr;<br><br>	<span class="hljs-keyword">if</span> (MAJOR(dev)&gt;=NRDEVS)<br>		<span class="hljs-keyword">return</span> -ENODEV;<br>	<span class="hljs-keyword">if</span> (!(call_addr=crw_table[MAJOR(dev)])) <span class="hljs-comment">/* call_addr 为函数指针，根据主设备号来确定设备类型，选择不同的处理函数，这里是 rw_tty */</span><br>		<span class="hljs-keyword">return</span> -ENODEV;<br>	<span class="hljs-keyword">return</span> call_addr(rw,MINOR(dev),buf,count,pos); <span class="hljs-comment">/* MINOR(dev) 获得次设备号 */</span><br>&#125;<br><span class="hljs-comment">// 设备号：Linux 0.11 将通过主设备号 + 次设备号来定位某一个设备。主设备号用来区分设备的类型，比如软驱设备（2）、硬盘设备（3）、ttyx 设备（4）。而次设备号用来区分同一类型的多个设备。</span><br><br><span class="hljs-comment">// 4. rw_tty 和 rw_ttyx</span><br><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">rw_ttyx</span><span class="hljs-params">(<span class="hljs-type">int</span> rw,<span class="hljs-type">unsigned</span> minor,<span class="hljs-type">char</span> * buf,<span class="hljs-type">int</span> count,<span class="hljs-type">off_t</span> * pos)</span> <span class="hljs-comment">// 串口终端设备处理函数</span><br>&#123;<br>	<span class="hljs-keyword">return</span> ((rw==READ)?tty_read(minor,buf,count): <span class="hljs-comment">// 最终调用 tty_read，minor 是次设备号</span><br>		tty_write(minor,buf,count));<br>&#125;<br><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">rw_tty</span><span class="hljs-params">(<span class="hljs-type">int</span> rw,<span class="hljs-type">unsigned</span> minor,<span class="hljs-type">char</span> * buf,<span class="hljs-type">int</span> count, <span class="hljs-type">off_t</span> * pos)</span> <span class="hljs-comment">// 控制台终端读写函数</span><br>&#123;<br>	<span class="hljs-keyword">if</span> (current-&gt;tty&lt;<span class="hljs-number">0</span>)<br>		<span class="hljs-keyword">return</span> -EPERM;<br>	<span class="hljs-keyword">return</span> rw_ttyx(rw,current-&gt;tty,buf,count,pos);<br>&#125;<br><br><span class="hljs-comment">// 5. tty_read</span><br><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">sleep_if_empty</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> tty_queue * <span class="hljs-built_in">queue</span>)</span><br>&#123;<br>	cli();<br>	<span class="hljs-keyword">while</span> (!current-&gt;signal &amp;&amp; EMPTY(*<span class="hljs-built_in">queue</span>))<br>		interruptible_sleep_on(&amp;<span class="hljs-built_in">queue</span>-&gt;proc_list);<br>	sti();<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">tty_read</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> channel, <span class="hljs-type">char</span> * buf, <span class="hljs-type">int</span> nr)</span><br>&#123;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tty_struct</span> * <span class="hljs-title">tty</span>;</span><br>	<span class="hljs-type">char</span> c, * b=buf;<br>    tty = &amp;tty_table[channel]; <span class="hljs-comment">/* channel 为次设备号 */</span><br>    ...<br>    <span class="hljs-keyword">while</span> (nr&gt;<span class="hljs-number">0</span>) &#123; <span class="hljs-comment">/* 当欲读取字符数大于零时 */</span><br>    	<span class="hljs-comment">/* 当辅助队列为空，或设置了规范模式标志且辅助队列字符数为零且空闲空间大于 20 时该进程阻塞。</span><br><span class="hljs-comment">           规范和非规范模式的区别在于，前者会按照实际逻辑处理特殊字符，比如擦除字符会删除缓冲队列的上一个字符；</span><br><span class="hljs-comment">           而非规范模式则将这些特殊字符都视为普通字符处理。Linux 0.11 应该主要工作在规范模式。</span><br><span class="hljs-comment">        */</span><br>		<span class="hljs-keyword">if</span> (EMPTY(tty-&gt;secondary) || (L_CANON(tty) &amp;&amp; !tty-&gt;secondary.data &amp;&amp; LEFT(tty-&gt;secondary)&gt;<span class="hljs-number">20</span>)) &#123;<br>			sleep_if_empty(&amp;tty-&gt;secondary); <span class="hljs-comment">/* 本进程进入可中断睡眠状态，等待用户键盘输入 */</span><br>			<span class="hljs-keyword">continue</span>;<br>		&#125;<br>		<span class="hljs-keyword">do</span> &#123;<br>            <span class="hljs-comment">/* 到这里时辅助队列必有字符可以取出，将它放在 c 中 */</span><br>			GETCH(tty-&gt;secondary,c);<br>            <span class="hljs-comment">/* 如果是文件结束符或者换行符，表示取完一行字符，字符行数减一 */</span><br>			<span class="hljs-keyword">if</span> (c==EOF_CHAR(tty) || c==<span class="hljs-number">10</span>) <br>				tty-&gt;secondary.data--;<br>			<span class="hljs-comment">/* 如果是文件结束符且为规范模式，则返回已读出字符 */</span><br>			<span class="hljs-keyword">if</span> (c==EOF_CHAR(tty) &amp;&amp; L_CANON(tty))<br>				<span class="hljs-keyword">return</span> (b-buf);<br>			<span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">/* 否则将该字符拷贝到用户空间，并将欲读字符数减一 */</span><br>				put_fs_byte(c,b++);<br>				<span class="hljs-keyword">if</span> (!--nr)<br>					<span class="hljs-keyword">break</span>;<br>			&#125;<br>		&#125; <span class="hljs-keyword">while</span> (nr&gt;<span class="hljs-number">0</span> &amp;&amp; !EMPTY(tty-&gt;secondary));<br>	...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="实验参考-6"><a href="#实验参考-6" class="headerlink" title="实验参考"></a>实验参考</h3><p>参考<a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/compare/master...Experiment7_terminal_device_control">这个提交</a>。</p>
+<h3 id="实验报告-3"><a href="#实验报告-3" class="headerlink" title="实验报告"></a>实验报告</h3><ul>
+<li>在原始代码中，按下 F12，中断响应后，中断服务程序会调用 <code>func</code> ？它实现的是什么功能？</li>
+</ul>
+<p>是的。键盘终端处理程序入口点为 <a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/blob/c5355bb4b8d57b53384c802e9b106d560e6046cd/kernel/chr_drv/keyboard.S#L37">keyboard_interrupt</a>，它根据键盘扫描码调用 <a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/blob/c5355bb4b8d57b53384c802e9b106d560e6046cd/kernel/chr_drv/keyboard.S#L53">key_table</a> 不同的函数。对于 F12，为 <code>func</code>。它实现的功能是将功能键转换为特殊字符，比如 F1 为 <code>esc[[A</code>，F2 为 <code>esc[[B</code>。</p>
+<ul>
+<li>在你的实现中，是否把向文件输出的字符也过滤了？如果是，那么怎么能只过滤向终端输出的字符？如果不是，那么怎么能把向文件输出的字符也一并进行过滤？</li>
+</ul>
+<p>没有。只过滤向终端输出的字符是通过 <code>con_write</code> 函数的修改来实现的。过滤向文件输出的字符则通过修改<code>file_write</code> 函数来实现。</p>
+<h2 id="实验八-proc-文件系统的实现"><a href="#实验八-proc-文件系统的实现" class="headerlink" title="实验八 proc 文件系统的实现"></a>实验八 proc 文件系统的实现</h2><h3 id="实验内容-7"><a href="#实验内容-7" class="headerlink" title="实验内容"></a>实验内容</h3><p>在 Linux 0.11 上实现 procfs（proc 文件系统）内的 psinfo 结点。当读取此结点的内容时，可得到系统当前所有进程的状态信息。例如，用 cat 命令显示 <code>/proc/psinfo</code> 的内容，可得到：</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs tap">$ cat /proc/psinfo<br>pid    state    father    counter    start_time<br>0   <span class="hljs-number"> 1 </span>   -1   <span class="hljs-number"> 0 </span>   0<br>1   <span class="hljs-number"> 1 </span>  <span class="hljs-number"> 0 </span>  <span class="hljs-number"> 28 </span>   1<br>4   <span class="hljs-number"> 1 </span>  <span class="hljs-number"> 1 </span>  <span class="hljs-number"> 1 </span>   73<br>3   <span class="hljs-number"> 1 </span>  <span class="hljs-number"> 1 </span>  <span class="hljs-number"> 27 </span>   63<br>6   <span class="hljs-number"> 0 </span>  <span class="hljs-number"> 4 </span>  <span class="hljs-number"> 12 </span>   817<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs dts">$ cat <span class="hljs-keyword">/proc/</span>hdinfo<br><span class="hljs-symbol">total_blocks:</span>    <span class="hljs-number">62000</span><span class="hljs-punctuation">;</span><br><span class="hljs-symbol">free_blocks:</span>    <span class="hljs-number">39037</span><span class="hljs-punctuation">;</span><br><span class="hljs-symbol">used_blocks:</span>    <span class="hljs-number">22963</span><span class="hljs-punctuation">;</span><br>...<br></code></pre></td></tr></table></figure>
+
+<p><code>procfs</code> 及其结点要在内核启动时自动创建。</p>
+<p>相关功能实现在 <code>fs/proc.c</code> 文件内。</p>
+<h3 id="原理分析-7"><a href="#原理分析-7" class="headerlink" title="原理分析"></a>原理分析</h3><p>整个 Linux 0.11 的文件系统至少有五层抽象：</p>
+<ol>
+<li>从磁盘的柱面、扇区和磁头到逻辑块（block）。</li>
+<li>多个进程通过请求项形成阻塞队列读写数据块。</li>
+<li>为了加速磁盘读写，引出内核缓冲块，它与请求项、数据块一一对应。</li>
+<li>从逻辑块到文件，引出 inode 节点。</li>
+<li>多个文件，目录组成目录树，形成文件系统：引导块、超级块、inode 节点位图、数据块位图、inode 块和数据块。</li>
+</ol>
+<p>实验七是为了理解上面的 1 到 3 层，而本实验是为了理解 4 到 5 层。</p>
+<p>根据实验指导，本实验通过 <code>sys_mkdir</code>创建了 <code>/proc</code> 目录，再通过 <code>sys_mknod</code> 新建一个设备文件的 inode 节点，它们的核心代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> NAME_LEN 14</span><br><span class="hljs-comment">/* 目录项（注意区别页目录表中的目录项）数据结构，可见一个目录项大小为 16B */</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">dir_entry</span> &#123;</span><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> inode; <span class="hljs-comment">/* inode 节点的编号（指针）*/</span><br>	<span class="hljs-type">char</span> name[NAME_LEN]; <span class="hljs-comment">/* 文件名 */</span><br>&#125;;<br><br><span class="hljs-comment">/* sys_mknod 的核心代码 */</span><br><span class="hljs-comment">/* 创建一个特殊文件或普通文件的 inode 节点 */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">sys_mknod</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> * filename, <span class="hljs-type">int</span> mode, <span class="hljs-type">int</span> dev)</span><br>&#123;<br>	<span class="hljs-type">const</span> <span class="hljs-type">char</span> * basename;<br>	<span class="hljs-type">int</span> namelen;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">m_inode</span> * <span class="hljs-title">dir</span>, * <span class="hljs-title">inode</span>;</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">buffer_head</span> * <span class="hljs-title">bh</span>;</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">dir_entry</span> * <span class="hljs-title">de</span>;</span><br>	...<br>    <span class="hljs-comment">/* 返回 filename 路径所在目录的 inode 节点，赋值给 dir</span><br><span class="hljs-comment">       例如，filename 为 /mnt/user/hello.txt，则 dir 为 /mnt/user 的 inode 节点，</span><br><span class="hljs-comment">       basename 为 /hello.txt，namelen 为 hello.txt 的长度。</span><br><span class="hljs-comment">    */</span><br>	<span class="hljs-keyword">if</span> (!(dir = dir_namei(filename,&amp;namelen,&amp;basename)))<br>		<span class="hljs-keyword">return</span> -ENOENT;<br>	...<br>    <span class="hljs-comment">/* 在 dir 尝试找 basename 的目录项 */</span><br>	bh = find_entry(&amp;dir,basename,namelen,&amp;de);<br>	<span class="hljs-keyword">if</span> (bh) &#123; <span class="hljs-comment">/* 如果找到了，说明 filename 已存在，返回出错码 */</span><br>		brelse(bh);<br>		iput(dir);<br>		<span class="hljs-keyword">return</span> -EEXIST;<br>	&#125;<br>     <span class="hljs-comment">/* 新建一个 inode 节点：找到空闲的 inode 节点，载入 inode_table[32] 中，更新 inode 位图 */</span><br>	inode = new_inode(dir-&gt;i_dev);<br>	<span class="hljs-keyword">if</span> (!inode) &#123;<br>		iput(dir);<br>		<span class="hljs-keyword">return</span> -ENOSPC;<br>	&#125;<br>	inode-&gt;i_mode = mode;<br>	<span class="hljs-keyword">if</span> (S_ISBLK(mode) || S_ISCHR(mode)) <span class="hljs-comment">/* 对于块设备和字符设备，i_zone[0] 为其设备号，注意这和普通文件不同 */</span><br>		inode-&gt;i_zone[<span class="hljs-number">0</span>] = dev;<br>	inode-&gt;i_mtime = inode-&gt;i_atime = CURRENT_TIME; <span class="hljs-comment">/* 更新 inode 的修改时间 */</span><br>	inode-&gt;i_dirt = <span class="hljs-number">1</span>; <span class="hljs-comment">/* inode 节点在内存改了，但是没有同步到硬盘的标志 */</span><br>	bh = add_entry(dir,basename,namelen,&amp;de); <span class="hljs-comment">/* 在 dir 目录中新增一个目录项 */</span><br>	<span class="hljs-keyword">if</span> (!bh) &#123; <span class="hljs-comment">/* 新增失败，则释放 dir 的 inode 节点并退出 */</span><br>		iput(dir);<br>		inode-&gt;i_nlinks=<span class="hljs-number">0</span>;<br>		iput(inode);<br>		<span class="hljs-keyword">return</span> -ENOSPC;<br>	&#125;<br>	de-&gt;inode = inode-&gt;i_num; <span class="hljs-comment">/* 设置目录项的 inode 节点编号 */</span><br>	bh-&gt;b_dirt = <span class="hljs-number">1</span>; <span class="hljs-comment">/* 置位高速缓冲区已修改标志 */</span><br>	iput(dir); <span class="hljs-comment">/* 释放 dir 的 inode 节点 */</span><br>	iput(inode); <span class="hljs-comment">/* 释放 dir 的 inode 节点 */</span><br>	brelse(bh); <span class="hljs-comment">/* 释放高速缓冲区 */</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">sys_mkdir</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> * pathname, <span class="hljs-type">int</span> mode)</span><br>&#123;<br>	<span class="hljs-type">const</span> <span class="hljs-type">char</span> * basename;<br>	<span class="hljs-type">int</span> namelen;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">m_inode</span> * <span class="hljs-title">dir</span>, * <span class="hljs-title">inode</span>;</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">buffer_head</span> * <span class="hljs-title">bh</span>, *<span class="hljs-title">dir_block</span>;</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">dir_entry</span> * <span class="hljs-title">de</span>;</span><br><br>	...<br>	<span class="hljs-keyword">if</span> (!(dir = dir_namei(pathname,&amp;namelen,&amp;basename)))<br>		<span class="hljs-keyword">return</span> -ENOENT;<br>	...<br>	bh = find_entry(&amp;dir,basename,namelen,&amp;de);<br>	<span class="hljs-keyword">if</span> (bh) &#123;<br>		brelse(bh);<br>		iput(dir);<br>		<span class="hljs-keyword">return</span> -EEXIST;<br>	&#125;<br>	inode = new_inode(dir-&gt;i_dev);<br>	<span class="hljs-keyword">if</span> (!inode) &#123;<br>		iput(dir);<br>		<span class="hljs-keyword">return</span> -ENOSPC;<br>	&#125;<br>     <span class="hljs-comment">/* 目录 inode 节点对应的数据块存放目录项，一个目录项大小为 16B，有两个目录项 */</span><br>	inode-&gt;i_size = <span class="hljs-number">32</span>;<br>	inode-&gt;i_dirt = <span class="hljs-number">1</span>;<br>	inode-&gt;i_mtime = inode-&gt;i_atime = CURRENT_TIME;<br>    <span class="hljs-comment">/* 新建一个数据块，用于存放 . 和 .. 两个目录项 */</span><br>	<span class="hljs-keyword">if</span> (!(inode-&gt;i_zone[<span class="hljs-number">0</span>]=new_block(inode-&gt;i_dev))) &#123;<br>		iput(dir);<br>		inode-&gt;i_nlinks--;<br>		iput(inode);<br>		<span class="hljs-keyword">return</span> -ENOSPC;<br>	&#125;<br>	inode-&gt;i_dirt = <span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">if</span> (!(dir_block=bread(inode-&gt;i_dev,inode-&gt;i_zone[<span class="hljs-number">0</span>]))) &#123;<br>		iput(dir);<br>		free_block(inode-&gt;i_dev,inode-&gt;i_zone[<span class="hljs-number">0</span>]);<br>		inode-&gt;i_nlinks--;<br>		iput(inode);<br>		<span class="hljs-keyword">return</span> -ERROR;<br>	&#125;<br>	de = (<span class="hljs-keyword">struct</span> dir_entry *) dir_block-&gt;b_data;<span class="hljs-comment">/* 指向目录项数据块 */</span><br>	de-&gt;inode=inode-&gt;i_num;<br>	<span class="hljs-built_in">strcpy</span>(de-&gt;name,<span class="hljs-string">&quot;.&quot;</span>); <span class="hljs-comment">/* 设置当前目录的目录项 */</span><br>	de++;<br>	de-&gt;inode = dir-&gt;i_num;<br>	<span class="hljs-built_in">strcpy</span>(de-&gt;name,<span class="hljs-string">&quot;..&quot;</span>); <span class="hljs-comment">/* 设置上级目录的目录项 */</span><br>	inode-&gt;i_nlinks = <span class="hljs-number">2</span>; <span class="hljs-comment">/* 新建目录的硬连接数为 2, 每多一个文件, i_nlinks 加1 */</span><br>	dir_block-&gt;b_dirt = <span class="hljs-number">1</span>;<br>	brelse(dir_block);<br>	inode-&gt;i_mode = I_DIRECTORY | (mode &amp; <span class="hljs-number">0777</span> &amp; ~current-&gt;umask);<br>	inode-&gt;i_dirt = <span class="hljs-number">1</span>;<br>	bh = add_entry(dir,basename,namelen,&amp;de);<br>	<span class="hljs-keyword">if</span> (!bh) &#123;<br>		iput(dir);<br>		free_block(inode-&gt;i_dev,inode-&gt;i_zone[<span class="hljs-number">0</span>]);<br>		inode-&gt;i_nlinks=<span class="hljs-number">0</span>;<br>		iput(inode);<br>		<span class="hljs-keyword">return</span> -ENOSPC;<br>	&#125;<br>	de-&gt;inode = inode-&gt;i_num;<br>	bh-&gt;b_dirt = <span class="hljs-number">1</span>;<br>	dir-&gt;i_nlinks++;<br>	dir-&gt;i_dirt = <span class="hljs-number">1</span>;<br>	iput(dir);<br>	iput(inode);<br>	brelse(bh);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>值得注意的是，cat 命令每次只会 <code>read</code> 512B：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* cat 命令的核心实现 */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>* argv[])</span><br>&#123;<br>    <span class="hljs-type">char</span> buf[<span class="hljs-number">513</span>] = &#123;<span class="hljs-string">&#x27;\0&#x27;</span>&#125;;<br>    <span class="hljs-type">int</span> nread;<br><br>    <span class="hljs-type">int</span> fd = open(argv[<span class="hljs-number">1</span>], O_RDONLY, <span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">while</span>(nread = read(fd, buf, <span class="hljs-number">512</span>)) <span class="hljs-comment">/* nread 为剩余字节数，当它为 0 时才退出循环 */</span><br>    &#123;<br>        buf[nread] = <span class="hljs-string">&#x27;\0&#x27;</span>;<br>        <span class="hljs-built_in">puts</span>(buf);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果进程数较多，需要打印的进程状态的字节数可能大于 512，那就要区分是两次不同的 cat，还是相同的 cat 但是不同的 <code>read</code> 。在 <a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/commit/f3f1b41087921548c74566dfeabbbbdd6f1f5153#diff-b39b0987584da45443e0dc21ebd7d3a984dbf489ea622a7079013226a200898d">proc.c</a> 中，每次都会将所有进程的状态存在全局数组 <code>k_buffer</code> 中（可能会超过 512B），而在拷贝到用户态数组 <code>buf</code> 时，拷贝字节数不会超过 512，通过文件指针 <code>pos</code> 来确定每次拷贝的起始位置。</p>
+<h3 id="实验参考-7"><a href="#实验参考-7" class="headerlink" title="实验参考"></a>实验参考</h3><p>参考<a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/commit/f3f1b41087921548c74566dfeabbbbdd6f1f5153">这个提交</a>。</p>
+<h3 id="实验报告-4"><a href="#实验报告-4" class="headerlink" title="实验报告"></a>实验报告</h3><p>完成实验后，在实验报告中回答如下问题：</p>
+<ul>
+<li>如果要求你在 <code>psinfo</code> 之外再实现另一个结点，具体内容自选，那么你会实现一个给出什么信息的结点？为什么？</li>
+</ul>
+<p>我会给出超级块的信息，因为里面有 inode 节点数，逻辑块数，inode 节点位图块数和逻辑块位图块数等磁盘的全局信息。</p>
+<ul>
+<li>一次 <code>read()</code> 未必能读出所有的数据，需要继续 <code>read()</code>，直到把数据读空为止。而数次 <code>read()</code> 之间，进程的状态可能会发生变化。你认为后几次 <code>read()</code> 传给用户的数据，应该是变化后的，还是变化前的？ + 如果是变化后的，那么用户得到的数据衔接部分是否会有混乱？如何防止混乱？ + 如果是变化前的，那么该在什么样的情况下更新 <code>psinfo</code> 的内容？</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/NaChen95/Linux0.11/commit/f3f1b41087921548c74566dfeabbbbdd6f1f5153">这种实现</a>是变化后的。会有混乱，因为拷贝到用户态数组 <code>buf</code> 时是按字节拷贝，而 <code>p-&gt;pid</code>，<code>p-&gt;state</code> 等是整型占据多个字节。如果两次 <code>read</code> 在一个整型数字之间且此时进程状态发生了变化，可能会导致混乱。一种解决方式是保证每次都输出完整的一行进程信息，向下取整。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%BE%E7%A8%8B/" class="category-chain-item">计算机课程</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%BE%E7%A8%8B/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="category-chain-item">操作系统</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%BE%E7%A8%8B/" class="print-no-link">#计算机课程</a>
+      
+        <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="print-no-link">#操作系统</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>哈工大操作系统课程实验</div>
+      <div>https://nachen95.github.io/2023/07/09/HITOS/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Na Chen</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年7月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/09/BuildBlogWiki-md/" title="如何搭建个人博客网站">
+                        <span class="hidden-mobile">如何搭建个人博客网站</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
